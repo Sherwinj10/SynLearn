@@ -1,0 +1,201 @@
+// ─── 30 Model Features (exact names the model accepts) ───────────────────────
+export const FEATURE_GROUPS = [
+  {
+    group: "Oral / Clefts",
+    features: ["cleft_palate", "cleft_lip", "cleft_lip_and_palate", "lower_lip_pits"],
+  },
+  {
+    group: "Facial Structure",
+    features: ["micrognathia", "midface_hypoplasia", "facial_asymmetry", "microcephaly", "hypertelorism"],
+  },
+  {
+    group: "Skull",
+    features: ["craniosynostosis"],
+  },
+  {
+    group: "Oral / Airway",
+    features: ["glossoptosis", "airway_obstruction", "feeding_problems"],
+  },
+  {
+    group: "Sensory",
+    features: ["ear_anomaly", "eye_anomaly", "hearing_loss"],
+  },
+  {
+    group: "Speech / Language",
+    features: ["speech_and_developmental_delay", "hypernasality"],
+  },
+  {
+    group: "Cardiac / Organ",
+    features: ["cardiac_defect", "brain_anomaly", "renal_anomaly", "genital_anomaly"],
+  },
+  {
+    group: "Skeletal / Limb",
+    features: ["skeletal_anomaly", "limb_anomaly", "polydactyly", "syndactyly", "broad_thumbs"],
+  },
+  {
+    group: "Growth / Neuro",
+    features: ["growth_retardation", "intellectual_disability", "seizures"],
+  },
+];
+
+export const ALL_FEATURES: string[] = FEATURE_GROUPS.flatMap((g) => g.features);
+
+// Human-readable labels for display
+export const FEATURE_LABELS: Record<string, string> = {
+  cleft_palate: "Cleft Palate",
+  cleft_lip: "Cleft Lip",
+  cleft_lip_and_palate: "Cleft Lip & Palate",
+  lower_lip_pits: "Lower Lip Pits",
+  micrognathia: "Micrognathia",
+  midface_hypoplasia: "Midface Hypoplasia",
+  facial_asymmetry: "Facial Asymmetry",
+  microcephaly: "Microcephaly",
+  hypertelorism: "Hypertelorism",
+  craniosynostosis: "Craniosynostosis",
+  glossoptosis: "Glossoptosis",
+  airway_obstruction: "Airway Obstruction",
+  feeding_problems: "Feeding Problems",
+  ear_anomaly: "Ear Anomaly",
+  eye_anomaly: "Eye Anomaly",
+  hearing_loss: "Hearing Loss",
+  speech_and_developmental_delay: "Speech & Dev. Delay",
+  hypernasality: "Hypernasality",
+  cardiac_defect: "Cardiac Defect",
+  brain_anomaly: "Brain Anomaly",
+  renal_anomaly: "Renal Anomaly",
+  genital_anomaly: "Genital Anomaly",
+  skeletal_anomaly: "Skeletal Anomaly",
+  limb_anomaly: "Limb Anomaly",
+  polydactyly: "Polydactyly",
+  syndactyly: "Syndactyly",
+  broad_thumbs: "Broad Thumbs",
+  growth_retardation: "Growth Retardation",
+  intellectual_disability: "Intellectual Disability",
+  seizures: "Seizures",
+};
+
+// ─── 34 Syndromes (exact names from model) ───────────────────────────────────
+export type Syndrome = {
+  id: string;           // slug for routing
+  name: string;         // exact model class name
+  shortDesc: string;
+  color: string;
+  image: string;
+};
+
+export const SYNDROMES: Syndrome[] = [
+  { id: "apert-syndrome", name: "Apert Syndrome", shortDesc: "Craniosynostosis with syndactyly of hands and feet.", color: "#6366f1", image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&q=80" },
+  { id: "beckwith-wiedemann", name: "Beckwith-Wiedmann Syndrome", shortDesc: "Overgrowth syndrome with macroglossia and abdominal wall defects.", color: "#0ea5e9", image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80" },
+  { id: "branchio-oto-renal", name: "Branchio-oto-renal", shortDesc: "Branchial arch anomalies, ear malformations, and renal defects.", color: "#10b981", image: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=600&q=80" },
+  { id: "charge-association", name: "CHARGE Association", shortDesc: "Coloboma, heart defects, choanal atresia, growth retardation.", color: "#f59e0b", image: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=600&q=80" },
+  { id: "cornelia-de-lange", name: "Cornelia de Lange", shortDesc: "Distinct facial features, limb anomalies, and intellectual disability.", color: "#8b5cf6", image: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=600&q=80" },
+  { id: "cri-du-chat", name: "Cri du chat", shortDesc: "Chromosome 5p deletion causing high-pitched cry and intellectual disability.", color: "#ec4899", image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&q=80" },
+  { id: "crouzon-syndrome", name: "Crouzon Syndrome", shortDesc: "FGFR2-linked craniosynostosis with midface hypoplasia.", color: "#ef4444", image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600&q=80" },
+  { id: "digeorge-syndrome", name: "DiGeorge syndrome", shortDesc: "22q11.2 deletion causing heart, palate, and immune defects.", color: "#6366f1", image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&q=80" },
+  { id: "edwards-syndrome", name: "Edwards syndrome", shortDesc: "Trisomy 18 — severe multi-organ anomalies with limited survival.", color: "#14b8a6", image: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?w=600&q=80" },
+  { id: "ehlers-danlos", name: "Ehlers-Danlos", shortDesc: "Connective tissue disorder with joint hypermobility and skin fragility.", color: "#84cc16", image: "https://images.unsplash.com/photo-1551076805-e1869033e561?w=600&q=80" },
+  { id: "fetal-alcohol-syndrome", name: "Fetal Alcohol Syndrome (FAS)", shortDesc: "Prenatal alcohol exposure causing facial and neurodevelopmental effects.", color: "#f97316", image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80" },
+  { id: "goldenhar-syndrome", name: "Goldenhar  Syndrome", shortDesc: "Oculo-auriculo-vertebral spectrum with hemifacial microsomia.", color: "#0ea5e9", image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&q=80" },
+  { id: "hemifacial-microsomia", name: "Hemifacial microsomia", shortDesc: "Unilateral underdevelopment of the face, ear, and jaw.", color: "#8b5cf6", image: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=600&q=80" },
+  { id: "kabuki-syndrome", name: "Kabuki syndrome", shortDesc: "Distinct facial features, intellectual disability, and growth delay.", color: "#ec4899", image: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=600&q=80" },
+  { id: "loeys-dietz", name: "Loeys-Dietz", shortDesc: "Connective tissue disorder with arterial aneurysms and craniofacial anomalies.", color: "#6366f1", image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&q=80" },
+  { id: "marfan-syndrome", name: "Marfan syndrome", shortDesc: "FBN1-linked connective tissue disorder with tall stature and aortic risk.", color: "#10b981", image: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=600&q=80" },
+  { id: "meckel-gruber", name: "Meckel-Gruber", shortDesc: "Lethal ciliopathy with encephalocele, polycystic kidneys, and polydactyly.", color: "#ef4444", image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600&q=80" },
+  { id: "miller-syndrome", name: "Miller syndrome", shortDesc: "Postaxial acrofacial dysostosis with limb and craniofacial defects.", color: "#f59e0b", image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&q=80" },
+  { id: "nager-syndrome", name: "Nager syndrome", shortDesc: "Acrofacial dysostosis with mandibular hypoplasia and limb defects.", color: "#14b8a6", image: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=600&q=80" },
+  { id: "opitz-syndrome", name: "Optiz Syndrome", shortDesc: "Midline defects including hypertelorism, cleft palate, and genital abnormalities.", color: "#84cc16", image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80" },
+  { id: "orofacial-digital-syndrome", name: "Oro-Facial Digital Syndrome type 1", shortDesc: "Midline cleft, lobulated tongue, and digital anomalies.", color: "#f97316", image: "https://images.unsplash.com/photo-1551076805-e1869033e561?w=600&q=80" },
+  { id: "pallister-hall", name: "Pallister-Hall", shortDesc: "Hypothalamic hamartoma, polydactyly, and multi-organ anomalies.", color: "#6366f1", image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&q=80" },
+  { id: "pfeiffer-syndrome", name: "Pfeiffer Syndrome (1, 2, 3)", shortDesc: "FGFR1/2-linked craniosynostosis with broad thumbs and big toes.", color: "#8b5cf6", image: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=600&q=80" },
+  { id: "pierre-robin", name: "Pierre Robin Sequence", shortDesc: "Micrognathia, glossoptosis, and airway obstruction triad.", color: "#2563eb", image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80" },
+  { id: "popliteal-pterygium", name: "Popliteal pterygium", shortDesc: "IRF6-linked syndrome with cleft lip/palate and popliteal webbing.", color: "#ec4899", image: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=600&q=80" },
+  { id: "saethre-chotzen", name: "Saethre-Chotzen Syndrome", shortDesc: "TWIST1-linked craniosynostosis with facial asymmetry.", color: "#10b981", image: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=600&q=80" },
+  { id: "shprintzen-goldberg", name: "Shprintzen-Goldberg", shortDesc: "SKI-gene craniosynostosis with marfanoid habitus and intellectual disability.", color: "#f59e0b", image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&q=80" },
+  { id: "smith-lemli-opitz", name: "Smith-Lemli-Opitz", shortDesc: "Cholesterol synthesis defect causing multi-system anomalies.", color: "#14b8a6", image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&q=80" },
+  { id: "stickler-syndrome", name: "Stickler Syndrome", shortDesc: "Collagen disorder with myopia, cleft palate, and hearing loss.", color: "#6366f1", image: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=600&q=80" },
+  { id: "treacher-collins", name: "Treacher Collins", shortDesc: "TCOF1-linked mandibulofacial dysostosis with ear and jaw anomalies.", color: "#ef4444", image: "https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600&q=80" },
+  { id: "trisomy-13", name: "Trisomy 13", shortDesc: "Patau syndrome — severe chromosomal anomalies with very limited survival.", color: "#7c3aed", image: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=600&q=80" },
+  { id: "van-der-woude", name: "Van der Woude Syndrome", shortDesc: "IRF6-linked cleft lip/palate with lower lip pits.", color: "#84cc16", image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80" },
+  { id: "velocardio-facial", name: "Velocardio-Facial Syndrome", shortDesc: "22q11.2 deletion with VPI, cardiac defects, and language delay.", color: "#0ea5e9", image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&q=80" },
+  { id: "wolf-hirschhorn", name: "Wolf-Hirschhorn Syndrome", shortDesc: "4p deletion causing 'Greek warrior helmet' face and intellectual disability.", color: "#f97316", image: "https://images.unsplash.com/photo-1551076805-e1869033e561?w=600&q=80" },
+];
+
+// Map model class name → syndrome id for routing
+export const MODEL_NAME_TO_SLUG: Record<string, string> = Object.fromEntries(
+  SYNDROMES.map((s) => [s.name, s.id])
+);
+
+// ─── Quiz ─────────────────────────────────────────────────────────────────────
+export type Question = {
+  q: string;
+  options: string[];
+  answer: number;
+};
+
+export const QUIZ: Question[] = [
+  {
+    q: "Which gene mutation is most commonly associated with Treacher Collins Syndrome?",
+    options: ["FGFR2", "TCOF1", "TP53", "COL1A1"],
+    answer: 1,
+  },
+  {
+    q: "Pierre Robin Sequence is defined by which classic triad?",
+    options: [
+      "Craniosynostosis, Syndactyly, Cleft Palate",
+      "Micrognathia, Glossoptosis, Cleft Palate",
+      "Hypertelorism, Flat Nasal Bridge, Hearing Loss",
+      "Exophthalmos, Beaked Nose, Midface Hypoplasia",
+    ],
+    answer: 1,
+  },
+  {
+    q: "Trisomy 13 is also known as:",
+    options: ["Edwards Syndrome", "Patau Syndrome", "Down Syndrome", "Cri-du-chat"],
+    answer: 1,
+  },
+  {
+    q: "Craniosynostosis refers to:",
+    options: [
+      "Fusion of fingers and toes",
+      "Premature fusion of skull sutures",
+      "Underdevelopment of the jaw",
+      "Dislocation of the lens",
+    ],
+    answer: 1,
+  },
+  {
+    q: "Apert Syndrome primarily involves which two features?",
+    options: [
+      "Craniosynostosis and Syndactyly",
+      "Hearing Loss and Cleft Palate",
+      "Hypertelorism and Webbed Neck",
+      "Exophthalmos and Low-Set Ears",
+    ],
+    answer: 0,
+  },
+  {
+    q: "CHARGE syndrome stands for:",
+    options: [
+      "Coloboma, Heart defects, choanal Atresia, Retardation, Genital and Ear anomalies",
+      "Cranio, Hearing, Airway, Renal, Growth, Eye anomalies",
+      "Cleft, Heart, Aorta, Renal, Growth, Ear",
+      "None of the above",
+    ],
+    answer: 0,
+  },
+  {
+    q: "Van der Woude Syndrome is caused by mutation in which gene?",
+    options: ["TCOF1", "FGFR2", "IRF6", "COL2A1"],
+    answer: 2,
+  },
+];
+
+// ─── Matching game pairs ───────────────────────────────────────────────────────
+export const MATCH_PAIRS: [string, string][] = [
+  ["Treacher Collins", "TCOF1 gene"],
+  ["Apert Syndrome", "FGFR2 / Syndactyly"],
+  ["Trisomy 13", "Patau Syndrome"],
+  ["Crouzon Syndrome", "Exophthalmos + midface hypoplasia"],
+  ["Pierre Robin", "Micrognathia + Glossoptosis"],
+  ["Van der Woude", "Lower lip pits + IRF6"],
+];
