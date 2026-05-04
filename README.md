@@ -24,10 +24,10 @@ After tuning the model for peak accuracy, we integrated it completely with a cin
 
 ```mermaid
 flowchart TD
-    A0["Clinical Features Input\n(30 Morphological Traits)"]
+    A0["Clinical Features Input\n(136 Morphological Traits)"]
     A1["Next.js Frontend\n(Cinematic UI Interface)"]
     A2["FastAPI Backend\n(RESTful Integration)"]
-    A3["Random Forest Classifier\n(syndlearn_model.pkl)"]
+    A3["Random Forest Classifier\n(syndlearn_model_136F.pkl)"]
     A4["Prediction Synthesis\n(Probabilistic Scoring)"]
     A5["Diagnostic Output\n(Confidence Match & Library)"]
 
@@ -63,11 +63,16 @@ cd SynLearn
 ```
 
 **2. Download the AI Model**  
-**⚠️ Important:** The pre-trained Random Forest model (`syndlearn_model.pkl`) is 125MB and is hosted in GitHub Releases to keep the codebase fast and light.   
-Go to the [Releases](../../releases) tab on the right side of the GitHub page. Download the file and place it exactly inside the `backend/` directory.
+**⚠️ Important Setup Step:** 
+The pre-trained Random Forest model is large and hosted in GitHub Releases to keep the repository fast. 
+**Before running the backend, you must:**
+1. Go to the [Releases](../../releases) tab on the right side of the GitHub repository page.
+2. Download the latest model `.pkl` file.
+3. Place the file directly inside the `backend/` directory.
 
 **3. Start Backend Engine**  
 ```bash
+# Start Backend (Make sure the model .pkl is inside the folder!)
 cd backend
 pip install -r requirements.txt
 uvicorn main:app --host 127.0.0.1 --port 8000
