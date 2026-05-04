@@ -1,0 +1,606 @@
+{
+  "cleft_palate": [],
+  "cleft_lip": [],
+  "cleft_lip_and_palate": [],
+  "bifid_uvula": [
+    "split uvula",
+    "forked uvula",
+    "divided uvula"
+  ],
+  "narrow_palate": [
+    "high narrow palate",
+    "constricted palate",
+    "narrow roof of mouth"
+  ],
+  "submucous_cleft": [],
+  "micrognathia": [
+    "small jaw",
+    "receding chin",
+    "underdeveloped jaw"
+  ],
+  "mandibular_hypoplasia": [
+    "small lower jaw",
+    "receding jaw",
+    "underdeveloped mandible"
+  ],
+  "prognathia": [
+    "protruding jaw",
+    "forward jaw",
+    "prominent jaw"
+  ],
+  "vertical_maxillary_excess": [
+    "excessive upper jaw growth",
+    "vertical maxillary excess",
+    "long upper jaw"
+  ],
+  "aplasia_hypoplasia_of_tmj": [
+    "underdeveloped jaw joint",
+    "missing jaw joint",
+    "small TMJ",
+    "jaw joint defect"
+  ],
+  "midface_hypoplasia": [],
+  "malar_hypoplasia": [
+    "underdeveloped cheekbones",
+    "flat cheekbones",
+    "small malar region"
+  ],
+  "flat_facial_profile": [
+    "flat facial appearance",
+    "flattened face",
+    "reduced facial contour"
+  ],
+  "flat_nasal_bridge": [
+    "low nasal bridge",
+    "flat nose bridge",
+    "depressed nasal bridge"
+  ],
+  "depressed_nasal_tip": [
+    "sunken nose tip",
+    "low nasal tip",
+    "downward nose tip"
+  ],
+  "flat_philtrum": [
+    "smooth philtrum",
+    "absent philtrum groove",
+    "flat upper lip groove"
+  ],
+  "thin_upper_lip": [
+    "thin upper lip",
+    "reduced lip thickness",
+    "narrow upper lip"
+  ],
+  "coarse_facial_features": [
+    "rough facial appearance",
+    "thick facial features",
+    "heavy facial features"
+  ],
+  "beaked_nose": [
+    "pointed nose",
+    "sharp nose",
+    "bird-like nose"
+  ],
+  "short_nose": [
+    "short nose",
+    "small nose",
+    "reduced nasal length"
+  ],
+  "bulbous_nose": [],
+  "long_face": [
+    "long face appearance",
+    "elongated face",
+    "increased facial height"
+  ],
+  "hypertelorism": [
+    "wide spaced eyes",
+    "increased distance between eyes",
+    "far apart eyes"
+  ],
+  "exophthalmos": [
+    "bulging eyes",
+    "protruding eyes",
+    "eyes sticking out"
+  ],
+  "proptosis": [
+    "bulging eyes",
+    "protruding eyes",
+    "eyes sticking out"
+  ],
+  "strabismus": [
+    "crossed eyes",
+    "misaligned eyes",
+    "squint"
+  ],
+  "ptosis": [],
+  "drooping_eyelids": [],
+  "hooded_eyes": [
+    "droopy upper eyelids",
+    "heavy eyelid fold",
+    "hooded eyelids"
+  ],
+  "downward_slanting_palpebral_fissures": [
+    "downward slanting eyes",
+    "eyes slanting down",
+    "drooping eye corners"
+  ],
+  "narrow_palpebral_fissures": [
+    "small eye opening",
+    "narrow eyes",
+    "reduced eye fissure"
+  ],
+  "short_palpebral_fissures": [
+    "small eye opening",
+    "short eye fissure",
+    "reduced palpebral fissure"
+  ],
+  "epicanthal_folds": [
+    "skin fold near eyes",
+    "inner eye fold",
+    "extra skin at eye corner"
+  ],
+  "coloboma_eyelid_retina": [
+    "gap in eye structure",
+    "missing part of eye",
+    "eye cleft defect"
+  ],
+  "microphthalmia": [
+    "small eyes",
+    "reduced eye size",
+    "tiny eyes"
+  ],
+  "retinal_detachment": [
+    "retina detachment",
+    "separation of retina",
+    "vision loss due to retina"
+  ],
+  "visual_impairment": [
+    "vision problems",
+    "reduced vision",
+    "visual impairment"
+  ],
+  "arched_eyebrows": [
+    "high curved eyebrows",
+    "raised eyebrows",
+    "curved brow shape"
+  ],
+  "long_eyelashes": [],
+  "ear_anomalies": [
+    "abnormal ears",
+    "unusual ear shape",
+    "ear defects"
+  ],
+  "microtia": [
+    "small ears",
+    "underdeveloped ears",
+    "malformed ears"
+  ],
+  "small_ears": [
+    "small ears",
+    "tiny ears",
+    "underdeveloped ears"
+  ],
+  "low_set_ears": [],
+  "preauricular_pits": [
+    "small pits near ear",
+    "ear dimples",
+    "preauricular dimples"
+  ],
+  "frequent_middle_ear_anomalies": [
+    "recurrent ear infections",
+    "frequent ear problems",
+    "repeated middle ear issues"
+  ],
+  "external_ear_anomalies": [],
+  "glossoptosis": [
+    "tongue falling back",
+    "backward tongue position",
+    "tongue obstruction"
+  ],
+  "macroglossia": [
+    "large tongue",
+    "enlarged tongue",
+    "big tongue"
+  ],
+  "macrostomia": [
+    "wide mouth",
+    "large mouth opening",
+    "increased mouth width"
+  ],
+  "tongue_abnormalities": [],
+  "missing_teeth": [
+    "missing teeth",
+    "absent teeth",
+    "tooth agenesis"
+  ],
+  "decreased_enamel": [
+    "weak tooth enamel",
+    "thin enamel",
+    "soft enamel"
+  ],
+  "neonatal_teeth": [
+    "teeth present at birth",
+    "early erupted teeth",
+    "neonatal dentition"
+  ],
+  "oral_apraxia": [
+    "difficulty planning speech",
+    "motor speech difficulty",
+    "speech apraxia"
+  ],
+  "swallowing_difficulty": [
+    "difficulty swallowing",
+    "trouble swallowing",
+    "dysphagia"
+  ],
+  "hypernasality": [
+    "nasal speech",
+    "too much nasal sound",
+    "speech through nose"
+  ],
+  "facial_asymmetry": [
+    "uneven face",
+    "asymmetrical face",
+    "one side different"
+  ],
+  "microcephaly": [
+    "small head size",
+    "reduced head circumference",
+    "small skull"
+  ],
+  "craniosynostosis": [
+    "early skull fusion",
+    "premature skull closure",
+    "skull bones fused early"
+  ],
+  "coronal_craniosynostosis": [
+    "early skull fusion front",
+    "premature skull closure front",
+    "fused skull bones front"
+  ],
+  "dysmorphic_facial_features": [
+    "unusual facial appearance",
+    "abnormal facial features",
+    "atypical face"
+  ],
+  "hearing_loss": [],
+  "conductive_hearing_loss": [
+    "hearing loss due to ear problem",
+    "middle ear hearing loss",
+    "sound not reaching inner ear"
+  ],
+  "speech_and_language_delay": [
+    "speech delay",
+    "delayed speech development",
+    "language delay"
+  ],
+  "language_delay_disorder": [
+    "delayed speech",
+    "language problems",
+    "difficulty understanding language"
+  ],
+  "developmental_delay": [
+    "slow development",
+    "delayed milestones",
+    "late development"
+  ],
+  "articulation_disorder": [],
+  "airway_obstruction": [
+    "blocked airway",
+    "airway blockage",
+    "breathing blockage",
+    "difficulty breathing"
+  ],
+  "upper_airway_stenosis": [
+    "narrow airway",
+    "upper airway narrowing",
+    "airway stenosis"
+  ],
+  "tracheal_anomalies": [
+    "abnormal trachea",
+    "airway tube defects",
+    "tracheal issues"
+  ],
+  "respiratory_issues": [
+    "breathing problems",
+    "respiratory difficulty",
+    "lung issues"
+  ],
+  "cat_like_cry": [
+    "high-pitched cry",
+    "kitten-like cry",
+    "unusual infant cry"
+  ],
+  "feeding_difficulty": [
+    "difficulty feeding",
+    "trouble eating",
+    "poor feeding"
+  ],
+  "feeding_problems": [],
+  "aspiration": [
+    "food entering airway",
+    "choking on food",
+    "liquid going into lungs",
+    "swallowing into airway"
+  ],
+  "pneumonia": [
+    "lung infection",
+    "chest infection",
+    "pneumonia symptoms"
+  ],
+  "cardiac_defect": [],
+  "cardiac_defects": [
+    "heart defects",
+    "heart problems",
+    "congenital heart issues"
+  ],
+  "congenital_heart_disease": [],
+  "conotruncal_defect": [
+    "heart outflow defect",
+    "major heart vessel defect",
+    "congenital heart outflow problem"
+  ],
+  "ventricular_septal_defect": [
+    "hole in heart lower chambers",
+    "ventricular hole",
+    "VSD heart defect"
+  ],
+  "atrial_septal_defect": [
+    "hole in heart",
+    "heart wall defect",
+    "ASD heart defect",
+    "upper chamber heart hole"
+  ],
+  "arterial_aneurysms": [
+    "swollen arteries",
+    "bulging blood vessels",
+    "artery ballooning"
+  ],
+  "brain_anomalies": [
+    "brain abnormalities",
+    "abnormal brain structure",
+    "brain defects"
+  ],
+  "agenesis_of_corpus_callosum": [
+    "absent corpus callosum",
+    "missing corpus callosum",
+    "brain halves not connected",
+    "no connection between brain hemispheres"
+  ],
+  "encephalocele": [
+    "brain tissue protrusion",
+    "brain bulge outside skull",
+    "skull defect with brain tissue"
+  ],
+  "holoprosencephaly": [
+    "forebrain malformation",
+    "incomplete brain division",
+    "brain not properly divided"
+  ],
+  "hydrocephalus": [],
+  "seizures": [
+    "fits",
+    "convulsions",
+    "seizure episodes"
+  ],
+  "hypotonia": [
+    "low muscle tone",
+    "floppy muscles",
+    "reduced muscle strength"
+  ],
+  "hypocalcemia": [
+    "low calcium levels",
+    "calcium deficiency",
+    "hypocalcemia symptoms"
+  ],
+  "polydactyly": [
+    "extra fingers",
+    "extra toes",
+    "additional digits",
+    "more than five fingers"
+  ],
+  "syndactyly": [
+    "fused fingers",
+    "joined digits",
+    "webbed fingers"
+  ],
+  "mitten_like_syndactyly": [
+    "fused fingers like mitten",
+    "joined fingers",
+    "mitten hand appearance"
+  ],
+  "clinodactyly": [
+    "curved finger",
+    "bent finger",
+    "sideways finger"
+  ],
+  "broad_thumbs": [
+    "wide thumbs",
+    "large thumbs",
+    "thick thumbs"
+  ],
+  "asymmetric_short_fingers": [
+    "uneven short fingers",
+    "irregular finger length",
+    "different sized fingers"
+  ],
+  "long_limbs": [
+    "long arms and legs",
+    "elongated limbs",
+    "tall limbs"
+  ],
+  "club_foot": [
+    "inward turned foot",
+    "twisted foot",
+    "foot deformity"
+  ],
+  "limb_anomalies": [
+    "abnormal limbs",
+    "limb defects",
+    "unusual limb structure"
+  ],
+  "webbing_of_fingers": [
+    "webbed fingers",
+    "skin between fingers",
+    "fused fingers"
+  ],
+  "skeletal_anomalies": [
+    "bone abnormalities",
+    "skeletal defects",
+    "abnormal bones"
+  ],
+  "cervical_spine_anomalies": [
+    "neck spine abnormalities",
+    "abnormal neck vertebrae",
+    "spine issues in neck"
+  ],
+  "vertebral_defects": [
+    "spine abnormalities",
+    "vertebral defects",
+    "abnormal vertebrae"
+  ],
+  "joint_hypermobility": [
+    "loose joints",
+    "flexible joints",
+    "overly movable joints"
+  ],
+  "osteoarthritis": [
+    "joint pain",
+    "joint degeneration",
+    "arthritis changes"
+  ],
+  "skin_hyperextensibility": [
+    "stretchy skin",
+    "highly elastic skin",
+    "loose skin"
+  ],
+  "growth_retardation": [
+    "poor growth",
+    "slow growth",
+    "growth delay"
+  ],
+  "poor_growth_dwarfism": [
+    "short stature",
+    "dwarfism",
+    "reduced height"
+  ],
+  "short_stature": [
+    "short height",
+    "reduced stature",
+    "below average height"
+  ],
+  "overgrowth_prenatal_postnatal": [
+    "excessive growth",
+    "increased body growth",
+    "abnormal growth pattern"
+  ],
+  "hemihypertrophy": [
+    "one side body overgrowth",
+    "asymmetric body growth",
+    "one side larger"
+  ],
+  "neonatal_hypoglycemia": [
+    "low blood sugar in newborn",
+    "neonatal low glucose",
+    "hypoglycemia in infants"
+  ],
+  "renal_anomalies": [
+    "kidney abnormalities",
+    "renal defects",
+    "abnormal kidneys"
+  ],
+  "polycystic_kidneys": [
+    "multiple kidney cysts",
+    "cystic kidneys",
+    "enlarged kidneys with cysts"
+  ],
+  "genital_anomalies": [
+    "abnormal genitalia",
+    "genital defects",
+    "unusual genital development"
+  ],
+  "hypospadias": [
+    "abnormal urethral opening",
+    "urine opening not at tip",
+    "misplaced urethral opening"
+  ],
+  "cryptorchidism": [
+    "undescended testis",
+    "testis not descended",
+    "missing testicle in scrotum"
+  ],
+  "endocrine_abnormalities": [
+    "hormone problems",
+    "gland issues",
+    "hormonal imbalance"
+  ],
+  "immune_deficiency": [
+    "weak immune system",
+    "low immunity",
+    "frequent infections"
+  ],
+  "behavioral_issues": [
+    "behavior problems",
+    "conduct issues",
+    "difficult behavior",
+    "emotional problems"
+  ],
+  "hyperactivity": [
+    "overactive behavior",
+    "excessive activity",
+    "hyper behavior"
+  ],
+  "distractibility": [
+    "easily distracted",
+    "poor attention",
+    "short attention span"
+  ],
+  "anxiety": [
+    "nervousness",
+    "excessive worry",
+    "fearfulness",
+    "anxious behavior"
+  ],
+  "bipolar_disorder": [
+    "mood swings",
+    "manic depression",
+    "extreme mood changes"
+  ],
+  "schizophrenia": [
+    "severe mental disorder",
+    "psychotic disorder",
+    "schizophrenia symptoms"
+  ],
+  "mild_psychosocial_issues": [
+    "mild behavioral issues",
+    "slight emotional problems",
+    "minor psychosocial concerns"
+  ],
+  "social_psychological_impact": [
+    "social impact",
+    "emotional impact",
+    "psychological effects"
+  ],
+  "intellectual_disability_mild_to_severe": [
+    "low intelligence",
+    "cognitive delay",
+    "reduced intellectual ability"
+  ],
+  "learning_disability": [
+    "learning problems",
+    "academic difficulty",
+    "difficulty in studies"
+  ],
+  "epibulbar_lipodermoids": [
+    "fatty growth on eye",
+    "eye surface growth",
+    "benign eye mass"
+  ],
+  "lower_lip_pits": [],
+  "umbilical_hernia": [
+    "navel hernia",
+    "belly button hernia",
+    "umbilical swelling"
+  ],
+  "omphalocele": [],
+  "tumor_risk": []
+}

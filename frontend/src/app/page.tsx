@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Dna, Search, X, ArrowRight, Zap, ChevronRight } from "lucide-react";
 import { FEATURE_GROUPS, FEATURE_LABELS, ALL_FEATURES } from "@/lib/data";
+import featureSynonyms from "@/lib/feature_synonyms.json";
 
 const API = "/api";
 
@@ -101,7 +102,12 @@ function FeatureSelector({ onResult }: { onResult: () => void }) {
     if (!q) return FEATURE_GROUPS;
     return FEATURE_GROUPS.map(g => ({
       ...g,
-      features: g.features.filter(f => FEATURE_LABELS[f].toLowerCase().includes(q) || f.includes(q)),
+      features: g.features.filter(f => {
+        if (FEATURE_LABELS[f].toLowerCase().includes(q) || f.includes(q)) return true;
+        const syns = (featureSynonyms as Record<string, string[]>)[f];
+        if (syns && syns.some(s => s.toLowerCase().includes(q))) return true;
+        return false;
+      }),
     })).filter(g => g.features.length > 0);
   }, [search]);
 
