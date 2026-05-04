@@ -79,6 +79,9 @@ function Hero({ onStart }: { onStart: () => void }) {
         <a href="/learn" className="btn btn-ghost" style={{ fontSize: "0.95rem", padding: "14px 32px" }}>
           Explore Syndromes
         </a>
+        <a href="/api/striped" className="btn btn-ghost" style={{ fontSize: "0.95rem", padding: "14px 32px", border: "1px solid rgba(99,102,241,0.4)", color: "var(--text)" }}>
+          Striped-Y
+        </a>
       </motion.div>
 
 

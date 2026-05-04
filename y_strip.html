@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CLEFTMAP PRO — Millard + Elsahy Modified Stripped Y</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;600&family=Figtree:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #f4f2ee;
+            --surface: #fff;
+            --surface2: #f9f8f5;
+            --border: #e0dcd4;
+            --text: #1a1714;
+            --muted: #6b6560;
+            --accent: #2b4c8c;
+            --none-c: #22a06b;
+            --none-bg: #e8f9f2;
+            --unrep-c: #e5412b;
+            --unrep-bg: #fdecea;
+            --rep-c: #c08a00;
+            --rep-bg: #fef7e0;
+            --sub-c: #7b4fc4;
+            --sub-bg: #f3edfb;
+            --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Figtree', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 0 0 60px;
+        }
+
+        /* HEADER */
+        .hdr {
+            background: var(--accent);
+            color: #fff;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 16px rgba(43, 76, 140, .3);
+        }
+
+        .hdr-l {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hdr-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.35rem;
+        }
+
+        .hdr-sub {
+            font-size: 0.7rem;
+            opacity: .75;
+            font-family: 'IBM Plex Mono', monospace;
+            margin-top: 2px;
+        }
+
+        .hdr-badge {
+            background: rgba(255, 255, 255, .18);
+            border: 1px solid rgba(255, 255, 255, .35);
+            border-radius: 6px;
+            padding: 3px 10px;
+            font-size: 0.7rem;
+            font-family: 'IBM Plex Mono', monospace;
+            letter-spacing: .06em;
+        }
+
+        .hdr-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-family: 'Figtree', sans-serif;
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+            border: none;
+            transition: all .15s;
+        }
+
+        .btn-reset {
+            background: rgba(255, 255, 255, .15);
+            color: #fff;
+            border: 1.5px solid rgba(255, 255, 255, .35);
+        }
+
+        .btn-reset:hover {
+            background: rgba(255, 255, 255, .25);
+        }
+
+        .btn-pdf {
+            background: #fff;
+            color: var(--accent);
+        }
+
+        .btn-pdf:hover {
+            background: #eef2fb;
+        }
+
+        /* CAPTION BAR */
+        .caption-bar {
+            max-width: 1100px;
+            margin: 18px auto 0;
+            padding: 0 20px;
+        }
+
+        .caption-box {
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius);
+            padding: 14px 20px;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            box-shadow: var(--shadow);
+        }
+
+        .caption-icon {
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .caption-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+
+        .caption-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 6px 24px;
+            margin-top: 6px;
+        }
+
+        .caption-item {
+            font-size: 0.75rem;
+            color: var(--muted);
+            display: flex;
+            gap: 6px;
+        }
+
+        .caption-num {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 700;
+            color: var(--accent);
+            min-width: 22px;
+        }
+
+        .mod-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .chip {
+            font-size: 0.68rem;
+            font-family: 'IBM Plex Mono', monospace;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3px 10px;
+            color: var(--muted);
+        }
+
+        .chip.hi {
+            background: #eef2fb;
+            border-color: #b8c8ef;
+            color: var(--accent);
+        }
+
+        /* MAIN GRID */
+        .main {
+            max-width: 1100px;
+            margin: 18px auto 0;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        @media(max-width:740px) {
+            .main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1.5px solid var(--border);
+            overflow: hidden;
+        }
+
+        .card-hdr {
+            padding: 12px 18px;
+            border-bottom: 1.5px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .card-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 600;
+            font-size: 0.78rem;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .card-body {
+            padding: 18px;
+        }
+
+        /* SVG DIAGRAM */
+        svg#diagram {
+            width: 100%;
+            max-width: 280px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .seg-area {
+            cursor: pointer;
+            transition: filter .15s;
+        }
+
+        .seg-area:hover {
+            filter: brightness(.84);
+        }
+
+        .f-def {
+            fill: #e8e2d8;
+        }
+
+        .f-none {
+            fill: var(--none-c);
+        }
+
+        .f-unrep {
+            fill: var(--unrep-c);
+        }
+
+        .f-rep {
+            fill: var(--rep-c);
+        }
+
+        .f-sub {
+            fill: var(--sub-c);
+        }
+
+        .sk {
+            stroke: #3a3228;
+            stroke-width: 1.8;
+        }
+
+        .lbl {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            fill: #3a3228;
+            text-anchor: middle;
+            dominant-baseline: central;
+            pointer-events: none;
+        }
+
+        .lbl-w {
+            fill: #fff;
+        }
+
+        .ann {
+            font-family: 'Figtree', sans-serif;
+            font-size: 9px;
+            fill: var(--muted);
+        }
+
+        /* LEGEND */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .leg-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .leg-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* SEL INFO */
+        .sel-info {
+            background: var(--surface2);
+            border: 1.5px solid var(--accent);
+            border-radius: 8px;
+            padding: 10px 13px;
+            margin: 12px 0 0;
+            font-size: 0.8rem;
+            display: none;
+        }
+
+        .sel-info.on {
+            display: block;
+        }
+
+        .sel-name {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 0.88rem;
+        }
+
+        .sel-side {
+            font-size: 0.73rem;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        /* STATUS BTNS */
+        .st-selector {
+            margin-top: 14px;
+        }
+
+        .st-lbl {
+            font-size: 0.73rem;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+
+        .st-hint {
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .st-btns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+        }
+
+        .st-btn {
+            padding: 9px 7px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            font-family: 'Figtree', sans-serif;
+            font-weight: 600;
+            font-size: 0.78rem;
+            cursor: pointer;
+            transition: all .15s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .st-btn.none {
+            background: var(--none-bg);
+            color: var(--none-c);
+            border-color: #b8edd6;
+        }
+
+        .st-btn.unrep {
+            background: var(--unrep-bg);
+            color: var(--unrep-c);
+            border-color: #f7c0b9;
+        }
+
+        .st-btn.rep {
+            background: var(--rep-bg);
+            color: var(--rep-c);
+            border-color: #f0d878;
+        }
+
+        .st-btn.sub {
+            background: var(--sub-bg);
+            color: var(--sub-c);
+            border-color: #d6b8f5;
+        }
+
+        .st-btn:hover {
+            filter: brightness(.93);
+            transform: translateY(-1px);
+        }
+
+        .st-btn.active {
+            border-width: 2.5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
+            transform: translateY(-1px);
+        }
+
+        /* VPD */
+        .vpd-box {
+            margin-top: 16px;
+            background: var(--surface2);
+            border: 1.5px solid #c9b8e8;
+            border-radius: 10px;
+            padding: 13px;
+        }
+
+        .vpd-lbl {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: #7b4fc4;
+            margin-bottom: 3px;
+        }
+
+        .vpd-sub {
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .vpd-btns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
+        .vpd-btn {
+            padding: 8px 5px;
+            border-radius: 7px;
+            border: 2px solid transparent;
+            font-family: 'Figtree', sans-serif;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all .15s;
+        }
+
+        .vpd-btn.vn {
+            background: var(--none-bg);
+            color: var(--none-c);
+            border-color: #b8edd6;
+        }
+
+        .vpd-btn.vm {
+            background: var(--rep-bg);
+            color: var(--rep-c);
+            border-color: #f0d878;
+        }
+
+        .vpd-btn.vmod {
+            background: var(--unrep-bg);
+            color: var(--unrep-c);
+            border-color: #f7c0b9;
+        }
+
+        .vpd-btn.vs {
+            background: var(--sub-bg);
+            color: var(--sub-c);
+            border-color: #d6b8f5;
+        }
+
+        .vpd-btn:hover {
+            filter: brightness(.93);
+        }
+
+        .vpd-btn.active {
+            box-shadow: 0 0 0 3px rgba(123, 79, 196, .3);
+        }
+
+        #vpd-disp {
+            margin-top: 8px;
+            font-size: 0.76rem;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        /* MATRIX TABLE */
+        .doc-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+        }
+
+        .doc-table th {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            padding: 7px 9px;
+            text-align: left;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .doc-table td {
+            padding: 6px 9px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        .doc-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .doc-table tr.act td {
+            background: #eef2fb;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.68rem;
+            font-weight: 600;
+        }
+
+        .bd {
+            background: var(--surface2);
+            color: var(--muted);
+        }
+
+        .b-none {
+            background: var(--none-bg);
+            color: var(--none-c);
+        }
+
+        .b-unrep {
+            background: var(--unrep-bg);
+            color: var(--unrep-c);
+        }
+
+        .b-rep {
+            background: var(--rep-bg);
+            color: var(--rep-c);
+        }
+
+        .b-sub {
+            background: var(--sub-bg);
+            color: var(--sub-c);
+        }
+
+        /* BOTTOM ROW */
+        .bot {
+            max-width: 1100px;
+            margin: 18px auto 0;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        @media(max-width:740px) {
+            .bot {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .classif-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .c-box {
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            padding: 11px 13px;
+        }
+
+        .c-box-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 5px;
+        }
+
+        .c-val {
+            font-weight: 700;
+            font-size: 0.88rem;
+            color: var(--accent);
+        }
+
+        .c-sub {
+            font-size: 0.7rem;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .lahsal {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1rem;
+            letter-spacing: .18em;
+            padding: 9px 13px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 8px;
+            margin-top: 9px;
+            text-align: center;
+        }
+
+        .lahsal-key {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            margin-top: 7px;
+        }
+
+        .lk {
+            font-size: 0.65rem;
+            font-family: 'IBM Plex Mono', monospace;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 2px 6px;
+            color: var(--muted);
+        }
+
+        .smuc-note {
+            margin-top: 11px;
+            font-size: 0.76rem;
+            background: var(--sub-bg);
+            border: 1.5px solid #d6b8f5;
+            border-radius: 7px;
+            padding: 9px 12px;
+            color: var(--sub-c);
+        }
+
+        .summary-text {
+            font-size: 0.8rem;
+            line-height: 1.65;
+            color: var(--text);
+        }
+
+        .empty {
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        /* INSTRUCTIONS */
+        .inst-list {
+            list-style: none;
+            counter-reset: inst;
+        }
+
+        .inst-list li {
+            counter-increment: inst;
+            padding: 5px 0 5px 26px;
+            font-size: 0.79rem;
+            color: var(--muted);
+            position: relative;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .inst-list li:last-child {
+            border-bottom: none;
+        }
+
+        .inst-list li::before {
+            content: counter(inst);
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 17px;
+            height: 17px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 50%;
+            font-size: 0.65rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        @media print {
+            .hdr {
+                position: relative;
+            }
+
+            .btn-reset,
+            .btn-pdf {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="hdr">
+        <div class="hdr-l">
+            <div>
+                <div class="hdr-title">CLEFTMAP PRO</div>
+                <div class="hdr-sub">Millard (1976) + Elsahy (1973) Modified Stripped "Y" Classification</div>
+            </div>
+            <div class="hdr-badge">13-Segment Edition</div>
+        </div>
+        <div class="hdr-actions">
+            <button class="btn btn-reset" onclick="resetAll()">↺ Reset</button>
+            <button class="btn btn-pdf" onclick="window.print()">⬇ PDF Report</button>
+        </div>
+    </header>
+
+    <!-- CAPTION / REFERENCE CARD -->
+    <div class="caption-bar">
+        <div class="caption-box">
+            <div class="caption-icon">📖</div>
+            <div style="flex:1">
+                <div class="caption-title">Segment Reference — Millard's Modification of Kernahan's Stripped "Y" (1976)
+                </div>
+                <div class="caption-grid" id="caption-grid"></div>
+                <div class="mod-chips" style="margin-top:10px;">
+                    <span class="chip hi">Millard 1976</span>
+                    <span class="chip hi">Elsahy 1973</span>
+                    <span class="chip">+ Seg 12: Pharynx (VP Competence Line)</span>
+                    <span class="chip">+ Seg 13: Premaxilla (protrusion arrow)</span>
+                    <span class="chip">Blocks 9–10: Hard palate posterior to incisive foramen (double-lined in
+                        Elsahy)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="main">
+        <!-- LEFT: DIAGRAM -->
+        <div class="card">
+            <div class="card-hdr"><span>🗺</span><span class="card-title">Anatomical Diagram</span></div>
+            <div class="card-body">
+                <div
+                    style="font-size:0.73rem;color:var(--muted);background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:6px 11px;text-align:center;margin-bottom:14px;">
+                    Click any numbered segment → select status below
+                </div>
+
+                <!--
+        LAYOUT (top→bottom, faithful to Millard fig):
+        Row 0: Seg 13 (premaxilla circle, top center)
+        Row 1: Seg 1 (left nasal floor ▲)  Seg 5 (right nasal floor ▲)
+        Row 2: Seg 2 (left lip rect)  Seg 6 (right lip rect)
+        Row 3: Seg 3 (left alveolus)  Seg 7 (right alveolus)
+        Row 4: Seg 4 (left HP ant)    Seg 8 (right HP ant)
+        Row 5: Seg 9  (HP post left half, double-lined)
+        Row 5: Seg 10 (HP post right half, double-lined)
+        Row 6: Seg 11 (soft palate, midline rect)
+        — dotted line — VP competence — 
+        Row 7: Seg 12 (pharynx circle)
+        R ← → L arrows at seg 10/11 level
+      -->
+                <svg id="diagram" viewBox="0 0 260 520" xmlns="http://www.w3.org/2000/svg">
+
+                    <!-- ARROWS R ← → L at mid level -->
+                    <text x="14" y="330" class="ann" font-weight="700" font-size="11" fill="#555">R ←</text>
+                    <text x="208" y="330" class="ann" font-weight="700" font-size="11" fill="#555">→ L</text>
+
+                    <!-- SEG 13: Premaxilla (circle, top) -->
+                    <circle cx="130" cy="28" r="22" class="seg-area sk f-def" id="seg-13" onclick="selectSeg(13)" />
+                    <text x="130" y="29" class="lbl">13</text>
+                    <text x="157" y="22" class="ann">Premaxilla</text>
+                    <!-- Protrusion arrow dotted -->
+                    <line x1="152" y1="28" x2="192" y2="28" stroke="#888" stroke-width="1.2" stroke-dasharray="3,2" />
+                    <polygon points="192,25 200,28 192,31" fill="#888" />
+
+                    <!-- SEG 1 nasal arch: inverted triangle (A) -->
+                    <polygon points="60,56 100,56 80,30" fill="#e8e2d8" stroke="#3a3228" stroke-width="1.5"
+                        stroke-dasharray="4,2" pointer-events="none" />
+                    <text x="80" y="48" class="lbl" font-size="10" fill="#2b4c8c">A</text>
+
+                    <!-- SEG 1: Left nasal floor (upright triangle) -->
+                    <polygon points="60,56 100,56 80,82" class="seg-area sk f-def" id="seg-1" onclick="selectSeg(1)" />
+                    <text x="80" y="72" class="lbl">1</text>
+
+                    <!-- SEG 5 nasal arch: inverted triangle (B) -->
+                    <polygon points="160,56 200,56 180,30" fill="#e8e2d8" stroke="#3a3228" stroke-width="1.5"
+                        stroke-dasharray="4,2" pointer-events="none" />
+                    <text x="180" y="48" class="lbl" font-size="10" fill="#2b4c8c">B</text>
+
+                    <!-- SEG 5: Right nasal floor (upright triangle) -->
+                    <polygon points="160,56 200,56 180,82" class="seg-area sk f-def" id="seg-5"
+                        onclick="selectSeg(5)" />
+                    <text x="180" y="72" class="lbl">5</text>
+
+                    <text x="130" y="24" class="ann" text-anchor="middle" font-size="8">← nasal arch (A / B) →</text>
+
+                    <!-- SEG 2: Left lip -->
+                    <rect x="52" y="88" width="72" height="48" rx="3" class="seg-area sk f-def" id="seg-2"
+                        onclick="selectSeg(2)" />
+                    <text x="88" y="113" class="lbl">2</text>
+
+                    <!-- SEG 6: Right lip -->
+                    <rect x="136" y="88" width="72" height="48" rx="3" class="seg-area sk f-def" id="seg-6"
+                        onclick="selectSeg(6)" />
+                    <text x="172" y="113" class="lbl">6</text>
+
+                    <!-- SEG 3: Left alveolus -->
+                    <rect x="52" y="150" width="72" height="46" rx="3" class="seg-area sk f-def" id="seg-3"
+                        onclick="selectSeg(3)" />
+                    <text x="88" y="174" class="lbl">3</text>
+
+                    <!-- SEG 7: Right alveolus -->
+                    <rect x="136" y="150" width="72" height="46" rx="3" class="seg-area sk f-def" id="seg-7"
+                        onclick="selectSeg(7)" />
+                    <text x="172" y="174" class="lbl">7</text>
+
+                    <!-- SEG 4: Left HP anterior to incisive foramen -->
+                    <rect x="52" y="201" width="72" height="46" rx="3" class="seg-area sk f-def" id="seg-4"
+                        onclick="selectSeg(4)" />
+                    <text x="88" y="225" class="lbl">4</text>
+
+                    <!-- SEG 8: Right HP anterior to incisive foramen -->
+                    <rect x="136" y="201" width="72" height="46" rx="3" class="seg-area sk f-def" id="seg-8"
+                        onclick="selectSeg(8)" />
+                    <text x="172" y="225" class="lbl">8</text>
+
+                    <!-- Incisive foramen marker -->
+                    <line x1="52" y1="248" x2="208" y2="248" stroke="#aaa" stroke-width="1" stroke-dasharray="4,2" />
+                    <text x="130" y="257" class="ann" text-anchor="middle" font-size="8">— incisive foramen —</text>
+
+                    <!-- SEG 9: HP posterior midline top (Elsahy double-lined) -->
+                    <rect x="94" y="261" width="72" height="36" rx="3" class="seg-area f-def" id="seg-9"
+                        onclick="selectSeg(9)" />
+                    <rect x="98" y="265" width="64" height="28" rx="2" fill="none" stroke="#3a3228" stroke-width="1.1"
+                        pointer-events="none" />
+                    <rect x="94" y="261" width="72" height="36" rx="3" fill="none" stroke="#3a3228" stroke-width="1.8"
+                        pointer-events="none" />
+                    <text x="130" y="280" class="lbl">9</text>
+
+                    <!-- SEG 10: HP posterior midline bottom (Elsahy double-lined) -->
+                    <rect x="94" y="299" width="72" height="36" rx="3" class="seg-area f-def" id="seg-10"
+                        onclick="selectSeg(10)" />
+                    <rect x="98" y="303" width="64" height="28" rx="2" fill="none" stroke="#3a3228" stroke-width="1.1"
+                        pointer-events="none" />
+                    <rect x="94" y="299" width="72" height="36" rx="3" fill="none" stroke="#3a3228" stroke-width="1.8"
+                        pointer-events="none" />
+                    <text x="130" y="318" class="lbl">10</text>
+
+                    <!-- SEG 11: Soft palate (midline) -->
+                    <rect x="94" y="340" width="72" height="40" rx="3" class="seg-area sk f-def" id="seg-11"
+                        onclick="selectSeg(11)" />
+                    <text x="130" y="361" class="lbl">11</text>
+
+                    <!-- VP competence dotted line (Elsahy: dotted from stem to circle 12) -->
+                    <line x1="130" y1="359" x2="130" y2="400" stroke="#7b4fc4" stroke-width="1.4"
+                        stroke-dasharray="4,3" />
+                    <text x="136" y="380" class="ann" font-size="8" fill="#7b4fc4">VP competence</text>
+
+                    <!-- SEG 12: Pharynx circle -->
+                    <circle cx="130" cy="425" r="28" class="seg-area sk f-def" id="seg-12" onclick="selectSeg(12)" />
+                    <text x="130" y="426" class="lbl">12</text>
+                    <text x="162" y="420" class="ann" font-size="8">Pharynx</text>
+                    <text x="162" y="431" class="ann" font-size="8">(VP circle)</text>
+
+                    <!-- Side annotations -->
+                    <text x="18" y="120" class="ann" text-anchor="middle" font-size="8">Lip</text>
+                    <text x="18" y="174" class="ann" text-anchor="middle" font-size="8">Alv.</text>
+                    <text x="18" y="218" class="ann" text-anchor="middle" font-size="8">HP ant.</text>
+                    <text x="18" y="281" class="ann" text-anchor="middle" font-size="8">HP post.</text>
+                    <text x="18" y="337" class="ann" text-anchor="middle" font-size="8">S.Pal.</text>
+                </svg>
+
+                <!-- LEGEND -->
+                <div class="legend">
+                    <div class="leg-item">
+                        <div class="leg-dot" style="background:var(--none-c)"></div>No Cleft
+                    </div>
+                    <div class="leg-item">
+                        <div class="leg-dot" style="background:var(--unrep-c)"></div>Unrepaired
+                    </div>
+                    <div class="leg-item">
+                        <div class="leg-dot" style="background:var(--rep-c)"></div>Repaired
+                    </div>
+                    <div class="leg-item">
+                        <div class="leg-dot" style="background:var(--sub-c)"></div>Submucous
+                    </div>
+                </div>
+
+                <!-- SEL INFO -->
+                <div class="sel-info" id="sel-info">
+                    <div class="sel-name" id="sel-name">—</div>
+                    <div class="sel-side" id="sel-side"></div>
+                </div>
+
+                <!-- STATUS SELECTOR -->
+                <div class="st-selector">
+                    <div class="st-lbl">Set Status for Segment</div>
+                    <div class="st-hint" id="st-hint">Click a segment on the diagram first</div>
+                    <div class="st-btns">
+                        <button class="st-btn none" onclick="setStatus('none')" id="btn-none">🟢 No Cleft</button>
+                        <button class="st-btn unrep" onclick="setStatus('unrep')" id="btn-unrep">🔴 Unrepaired</button>
+                        <button class="st-btn rep" onclick="setStatus('rep')" id="btn-rep">🟡 Repaired</button>
+                        <button class="st-btn sub" onclick="setStatus('sub')" id="btn-sub">🟣 Submucous</button>
+                    </div>
+                </div>
+
+                <!-- VPD SELECTOR -->
+                <div class="vpd-box">
+                    <div class="vpd-lbl">VP Competence / VPD Severity</div>
+                    <div class="vpd-sub">Assessed via dotted line to Pharynx circle (Seg 12) — Elsahy's addition</div>
+                    <div class="vpd-btns">
+                        <button class="vpd-btn vn" id="vpd-none" onclick="setVPD('none')">✅ Adequate VP</button>
+                        <button class="vpd-btn vm" id="vpd-mild" onclick="setVPD('mild')">🟡 Mild VPD</button>
+                        <button class="vpd-btn vmod" id="vpd-moderate" onclick="setVPD('moderate')">🔶 Moderate
+                            VPD</button>
+                        <button class="vpd-btn vs" id="vpd-severe" onclick="setVPD('severe')">🔴 Severe VPD</button>
+                    </div>
+                    <div id="vpd-disp">Not assessed</div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- RIGHT: MATRIX -->
+        <div class="card">
+            <div class="card-hdr"><span>📊</span><span class="card-title">Documentation Matrix</span></div>
+            <div class="card-body" style="padding:0">
+                <table class="doc-table">
+                    <thead>
+                        <tr>
+                            <th>Seg.</th>
+                            <th>Anatomical Area</th>
+                            <th>Side</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="matrix-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="bot">
+        <div class="card">
+            <div class="card-hdr"><span>🔬</span><span class="card-title">Auto-Classification</span></div>
+            <div class="card-body" id="classif-content">
+                <div class="empty">Select segment statuses to generate classification.</div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-hdr"><span>📝</span><span class="card-title">Clinical Summary</span></div>
+            <div class="card-body" id="summary-content">
+                <div class="empty">No data selected yet.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INSTRUCTIONS -->
+    <div style="max-width:1100px;margin:18px auto 0;padding:0 20px 0;">
+        <div class="card">
+            <div class="card-hdr"><span>ℹ️</span><span class="card-title">Instructions — Millard + Elsahy Modified
+                    Stripped Y</span></div>
+            <div class="card-body">
+                <ul class="inst-list">
+                    <li>Click any numbered segment in the diagram to select it, then choose a cleft status using the
+                        buttons below the diagram.</li>
+                    <li><b>Seg 1 & 5</b> = Nasal floor (Millard's triangles). <b>Seg 2 & 6</b> = Lip. <b>Seg 3 & 7</b> =
+                        Alveolus. <b>Seg 4 & 8</b> = Hard palate anterior to incisive foramen.</li>
+                    <li><b>Seg 9 & 10</b> = Hard palate posterior to incisive foramen (double-lined per Elsahy; arrows
+                        indicate deflection in complete clefts).</li>
+                    <li><b>Seg 11</b> = Soft palate. <b>Seg 12</b> = Pharynx circle (VP competence via dotted line —
+                        Elsahy). <b>Seg 13</b> = Premaxilla (protrusion indicated by dotted arrow — Elsahy).</li>
+                    <li>Use the <b>VP Competence selector</b> to grade velopharyngeal function. LAHSAL notation is
+                        auto-generated in real time.</li>
+                    <li>Click <b>PDF Report</b> to print or save for clinical records.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SEGS = [
+            { id: 1, label: "Nasal floor", side: "Left" },
+            { id: 2, label: "Lip", side: "Left" },
+            { id: 3, label: "Alveolus", side: "Left" },
+            { id: 4, label: "Hard palate (ant. to incisive foramen)", side: "Left" },
+            { id: 5, label: "Nasal floor", side: "Right" },
+            { id: 6, label: "Lip", side: "Right" },
+            { id: 7, label: "Alveolus", side: "Right" },
+            { id: 8, label: "Hard palate (ant. to incisive foramen)", side: "Right" },
+            { id: 9, label: "Hard palate (post. to incisive foramen)", side: "Left — double-lined" },
+            { id: 10, label: "Hard palate (post. to incisive foramen)", side: "Right — double-lined" },
+            { id: 11, label: "Soft palate", side: "Midline" },
+            { id: 12, label: "Pharynx (VP competence circle)", side: "Midline — Elsahy" },
+            { id: 13, label: "Premaxilla", side: "Midline — Elsahy" },
+        ];
+
+        // Build caption grid
+        const cg = document.getElementById('caption-grid');
+        SEGS.forEach(s => {
+            const d = document.createElement('div');
+            d.className = 'caption-item';
+            d.innerHTML = `<span class="caption-num">${s.id}</span><span>${s.label} <span style="color:#aaa;font-size:0.68rem">(${s.side})</span></span>`;
+            cg.appendChild(d);
+        });
+
+        const state = {};
+        SEGS.forEach(s => state[s.id] = null);
+        let selSeg = null;
+        let vpd = null;
+
+        function selectSeg(id) {
+            selSeg = id;
+            document.querySelectorAll('#matrix-body tr').forEach(r => r.classList.remove('act'));
+            const row = document.getElementById('row-' + id);
+            if (row) { row.classList.add('act'); row.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+            const seg = SEGS.find(s => s.id === id);
+            document.getElementById('sel-info').classList.add('on');
+            document.getElementById('sel-name').textContent = `Segment ${id} — ${seg.label}`;
+            document.getElementById('sel-side').textContent = `Side / Region: ${seg.side}`;
+            document.getElementById('st-hint').textContent = `Segment ${id} selected — choose status:`;
+            highlightBtn();
+        }
+
+        function highlightBtn() {
+            ['none', 'unrep', 'rep', 'sub'].forEach(s => document.getElementById('btn-' + s).classList.remove('active'));
+            if (selSeg && state[selSeg]) document.getElementById('btn-' + state[selSeg])?.classList.add('active');
+        }
+
+        function setStatus(s) {
+            if (!selSeg) return;
+            state[selSeg] = s;
+            updateDiagram();
+            renderMatrix();
+            renderClassif();
+            highlightBtn();
+        }
+
+        function setVPD(g) {
+            vpd = g;
+            ['none', 'mild', 'moderate', 'severe'].forEach(k => document.getElementById('vpd-' + k).classList.remove('active'));
+            document.getElementById('vpd-' + g).classList.add('active');
+            const labels = { none: 'Adequate VP closure — no VPD', mild: 'Mild VPD — occasional nasal emission', moderate: 'Moderate VPD — consistent hypernasality', severe: 'Severe VPD — significant velopharyngeal insufficiency' };
+            const disp = document.getElementById('vpd-disp');
+            disp.textContent = labels[g];
+            disp.style.color = g === 'none' ? 'var(--none-c)' : g === 'mild' ? 'var(--rep-c)' : g === 'moderate' ? 'var(--unrep-c)' : 'var(--sub-c)';
+            disp.style.fontStyle = 'normal';
+            renderClassif();
+        }
+
+        const fillClass = { null: 'f-def', none: 'f-none', unrep: 'f-unrep', rep: 'f-rep', sub: 'f-sub' };
+
+        function updateDiagram() {
+            SEGS.forEach(seg => {
+                const el = document.getElementById('seg-' + seg.id);
+                if (!el) return;
+                const base = 'seg-area sk';
+                const f = fillClass[state[seg.id]] || 'f-def';
+                // Preserve double-lining for 9 & 10 — just update fill via class
+                el.setAttribute('class', `seg-area ${(seg.id === 9 || seg.id === 10) ? '' : 'sk'} ${f}`);
+                if (seg.id === 9 || seg.id === 10) el.setAttribute('fill', getComputedFill(state[seg.id]));
+            });
+        }
+
+        function getComputedFill(s) {
+            return { null: '#e8e2d8', none: '#22a06b', unrep: '#e5412b', rep: '#c08a00', sub: '#7b4fc4' }[s] || '#e8e2d8';
+        }
+
+        function badgeHtml(s) {
+            if (!s) return `<span class="badge bd">—</span>`;
+            const l = { none: 'No Cleft', unrep: 'Unrepaired', rep: 'Repaired', sub: 'Submucous' };
+            const cls = { none: 'b-none', unrep: 'b-unrep', rep: 'b-rep', sub: 'b-sub' };
+            return `<span class="badge ${cls[s]}">${l[s]}</span>`;
+        }
+
+        function renderMatrix() {
+            const tb = document.getElementById('matrix-body');
+            tb.innerHTML = '';
+            SEGS.forEach(seg => {
+                const tr = document.createElement('tr');
+                tr.id = 'row-' + seg.id;
+                if (selSeg === seg.id) tr.classList.add('act');
+                tr.onclick = () => selectSeg(seg.id);
+                tr.style.cursor = 'pointer';
+                tr.innerHTML = `<td><b>${seg.id}</b></td><td style="font-size:0.73rem">${seg.label}</td><td style="font-size:0.73rem">${seg.side}</td><td>${badgeHtml(state[seg.id])}</td>`;
+                tb.appendChild(tr);
+            });
+        }
+
+        function hasCleft(id) { return state[id] && state[id] !== 'none'; }
+        function anySet() { return SEGS.some(s => state[s.id] !== null); }
+
+        function computeLAHSAL() {
+            // L(left lip=2) A(left alv=3) H(HP=4+9+8) S(SP=11) A(right alv=7) L(right lip=6)
+            function sym(id) {
+                const s = state[id];
+                if (!s || s === 'none') return '—';
+                if (s === 'unrep') return '●';
+                if (s === 'rep') return '+';
+                if (s === 'sub') return '◌';
+                return '—';
+            }
+            const hpS = [4, 9, 10, 8].map(i => state[i]).find(s => s && s !== 'none') || null;
+            function symS(s) { if (!s || s === 'none') return '—'; if (s === 'unrep') return '●'; if (s === 'rep') return '+'; if (s === 'sub') return '◌'; return '—'; }
+            return `${sym(2)} ${sym(3)} ${symS(hpS)} ${sym(11)} ${sym(7)} ${sym(6)}`;
+        }
+
+        function classifyType() {
+            const lipL = hasCleft(2), lipR = hasCleft(6), alvL = hasCleft(3), alvR = hasCleft(7);
+            const hp = hasCleft(4) || hasCleft(8) || hasCleft(9) || hasCleft(10);
+            const sp = hasCleft(11), pmx = hasCleft(13);
+            const left = lipL || alvL || hasCleft(4) || hasCleft(1);
+            const right = lipR || alvR || hasCleft(8) || hasCleft(5);
+            let lat = left && right ? 'Bilateral' : left ? 'Unilateral Left' : right ? 'Unilateral Right' : hp || sp ? 'Midline' : '—';
+            let type = 'No Cleft Identified', detail = '';
+            if (lipL || lipR) {
+                if ((alvL || alvR) && (hp || sp)) { type = 'Complete Cleft'; detail = 'Lip + Alveolus + Palate'; }
+                else if (alvL || alvR) { type = 'Cleft Lip & Alveolus'; detail = 'Lip and alveolus; palate intact'; }
+                else if (hp || sp) { type = 'Cleft Lip & Palate'; detail = 'Without alveolar involvement'; }
+                else { type = 'Cleft Lip'; detail = 'Isolated lip cleft'; }
+            } else if ((alvL || alvR) && (hp || sp)) { type = 'Cleft Alveolus & Palate'; detail = 'Without lip involvement'; }
+            else if (hp || sp) { type = 'Cleft Palate'; detail = 'Palate only'; }
+            const submOnly = [9, 10, 11].filter(id => state[id] === 'sub');
+            if (!type.includes('Cleft') && submOnly.length) { type = 'Submucous Cleft Palate'; detail = 'Intact mucosa; submucosal defect'; }
+            const anyU = SEGS.some(s => state[s.id] === 'unrep');
+            const anyR = SEGS.some(s => state[s.id] === 'rep');
+            let repStatus = anyU && anyR ? 'Partial Repair' : anyR ? 'Post-operative' : anyU ? 'Unrepaired' : '—';
+            if (pmx) { detail += (detail ? ' + ' : '') + 'Premaxillary protrusion (Seg 13)'; }
+            return { type, detail, lat, repStatus };
+        }
+
+        function renderClassif() {
+            if (!anySet()) {
+                document.getElementById('classif-content').innerHTML = `<div class="empty">Select segment statuses to generate classification.</div>`;
+                document.getElementById('summary-content').innerHTML = `<div class="empty">No data selected yet.</div>`;
+                return;
+            }
+            const ct = classifyType();
+            const lahsal = computeLAHSAL();
+            const aff = SEGS.filter(s => state[s.id] && state[s.id] !== 'none').length;
+            const sev = aff === 0 ? '—' : aff <= 2 ? 'Mild' : aff <= 6 ? 'Moderate' : 'Severe';
+            const submNote = [9, 10, 11].filter(id => state[id] === 'sub').map(id => SEGS.find(s => s.id === id).label);
+            const vpdLabel = { none: 'Adequate VP', mild: 'Mild VPD', moderate: 'Moderate VPD', severe: 'Severe VPD' };
+            const vpdColor = { none: 'var(--none-c)', mild: 'var(--rep-c)', moderate: 'var(--unrep-c)', severe: 'var(--sub-c)' };
+
+            document.getElementById('classif-content').innerHTML = `
+    <div class="classif-grid">
+      <div class="c-box"><div class="c-box-title">Cleft Type</div><div class="c-val">${ct.type}</div><div class="c-sub">${ct.detail || '—'}</div></div>
+      <div class="c-box"><div class="c-box-title">Laterality</div><div class="c-val">${ct.lat}</div></div>
+      <div class="c-box"><div class="c-box-title">Severity</div><div class="c-val">${sev}</div><div class="c-sub">${aff} segment(s) affected</div></div>
+      <div class="c-box"><div class="c-box-title">Repair Status</div><div class="c-val">${ct.repStatus}</div></div>
+    </div>
+    <div class="lahsal">LAHSAL: &nbsp; ${lahsal}</div>
+    <div class="lahsal-key">
+      <span class="lk">L=Lip(L)</span><span class="lk">A=Alv(L)</span><span class="lk">H=Hard Pal.</span>
+      <span class="lk">S=Soft Pal.</span><span class="lk">A=Alv(R)</span><span class="lk">L=Lip(R)</span>
+      <span class="lk">● Unrepaired</span><span class="lk">+ Repaired</span><span class="lk">◌ Submucous</span><span class="lk">— None</span>
+    </div>
+    ${submNote.length ? `<div class="smuc-note"><b>Submucous Cleft Palate:</b> Involvement in ${submNote.join(', ')}. Assess triad: bifid uvula, zona pellucida, palpable notch.</div>` : ''}
+    ${vpd && vpd !== 'none' ? `<div style="margin-top:9px;font-size:0.76rem;background:var(--sub-bg);border:1.5px solid #d6b8f5;border-radius:7px;padding:9px 12px;color:${vpdColor[vpd]};"><b>VPD:</b> ${vpdLabel[vpd]} — Elsahy's VP competence circle (Seg 12) affected.</div>` : ''}
+  `;
+
+            // Clinical summary
+            const impls = [];
+            if (hasCleft(2) || hasCleft(6)) impls.push('Labial sound articulation /p/ /b/ /m/');
+            if (hasCleft(3) || hasCleft(7)) impls.push('Alveolar consonants /t/ /d/ /n/ /l/');
+            if (hasCleft(4) || hasCleft(8) || hasCleft(9) || hasCleft(10)) impls.push('VPI screening; VP imaging');
+            if (hasCleft(11)) impls.push('Hypernasality, nasal emission assessment');
+            if (hasCleft(12)) impls.push('Nasopharyngoscopy; VP closure evaluation');
+            if (hasCleft(13)) impls.push('Premaxillary protrusion assessment; orthodontic referral');
+            if (vpd === 'severe') impls.push('Severe VPD — surgical review / prosthetic management');
+            else if (vpd === 'moderate') impls.push('Moderate VPD — VP imaging + SLP therapy');
+            else if (vpd === 'mild') impls.push('Mild VPD — resonance therapy; monitor VP closure');
+
+            document.getElementById('summary-content').innerHTML = `
+    <div class="summary-text">
+      <b>Diagnosis:</b> ${ct.type} — ${ct.lat}.<br/>
+      <b>Severity:</b> ${sev} (${aff} segment[s]).<br/>
+      <b>Repair Status:</b> ${ct.repStatus}.<br/>
+      <b>LAHSAL:</b> <code style="font-family:'IBM Plex Mono',monospace;background:var(--surface2);padding:1px 5px;border-radius:3px;">${lahsal}</code><br/>
+      ${vpd ? `<b>VP Competence:</b> <span style="font-weight:700;color:${vpdColor[vpd] || 'var(--muted)'}">${vpdLabel[vpd] || '—'}</span><br/>` : ''}
+      <br/><b>SLP Implications:</b> ${impls.length ? impls.join('; ') : 'Comprehensive evaluation recommended'}.
+    </div>
+  `;
+        }
+
+        function resetAll() {
+            SEGS.forEach(s => state[s.id] = null);
+            selSeg = null; vpd = null;
+            document.getElementById('sel-info').classList.remove('on');
+            document.getElementById('st-hint').textContent = 'Click a segment on the diagram first';
+            ['none', 'unrep', 'rep', 'sub'].forEach(k => document.getElementById('btn-' + k).classList.remove('active'));
+            ['none', 'mild', 'moderate', 'severe'].forEach(k => document.getElementById('vpd-' + k).classList.remove('active'));
+            const disp = document.getElementById('vpd-disp');
+            disp.textContent = 'Not assessed'; disp.style.color = 'var(--muted)'; disp.style.fontStyle = 'italic';
+            // Reset double-lined segments fill
+            [9, 10].forEach(id => { const el = document.getElementById('seg-' + id); if (el) el.setAttribute('fill', '#e8e2d8'); });
+            updateDiagram();
+            renderMatrix();
+            document.getElementById('classif-content').innerHTML = `<div class="empty">Select segment statuses to generate classification.</div>`;
+            document.getElementById('summary-content').innerHTML = `<div class="empty">No data selected yet.</div>`;
+        }
+
+        renderMatrix();
+    </script>
+</body>
+
+</html>
