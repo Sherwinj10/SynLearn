@@ -2,7 +2,7 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { Search, X, ExternalLink, BookOpen } from "lucide-react";
+import { Search, X, ExternalLink, BookOpen, Sparkles } from "lucide-react";
 import { SYNDROMES } from "@/lib/data";
 import { SYNDROME_CONTENT } from "@/lib/syndromeContent";
 
@@ -90,9 +90,12 @@ export default function LearnPage() {
               <h1 style={{ fontFamily: "var(--display)", fontSize: "clamp(2rem,5vw,4rem)", fontWeight: 800, letterSpacing: "-0.04em", color: "var(--text)", lineHeight: 1.1, marginBottom: 12 }}>
                 Syndrome<br /><span className="gradient-text-2">Library</span>
               </h1>
-              <p style={{ color: "var(--text-subtle)", fontSize: "0.95rem", maxWidth: 400, lineHeight: 1.7 }}>
+              <p style={{ color: "var(--text-subtle)", fontSize: "0.95rem", maxWidth: 400, lineHeight: 1.7, marginBottom: 24 }}>
                 Structured medical knowledge on 34 craniofacial syndromes — etiology, genetics, speech characteristics, and clinical recommendations.
               </p>
+              <button onClick={() => router.push("/learn/quiz")} className="btn btn-primary" style={{ padding: "12px 24px", fontSize: "0.9rem" }}>
+                <Sparkles size={16} /> Enter AI Quiz Mode
+              </button>
             </div>
           </div>
         </motion.div>

@@ -190,6 +190,31 @@ export default function ResultPage() {
                     </span>
                   ))}
                 </div>
+
+                {/* Feature Gallery */}
+                <div style={{ marginTop: 24, paddingTop: 16, borderTop: "1px solid var(--border)" }}>
+                  <p style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", letterSpacing: "0.08em", color: "var(--text-muted)", textTransform: "uppercase", marginBottom: 12 }}>
+                    Feature Gallery
+                  </p>
+                  <div style={{ display: "flex", gap: 12, overflowX: "auto", paddingBottom: 12, scrollbarWidth: "thin" }}>
+                    {result.active_features.map(f => (
+                      <div key={`img-${f}`} style={{ flexShrink: 0, width: 100 }}>
+                        <div style={{ width: 100, height: 100, borderRadius: 12, overflow: "hidden", background: "var(--surface)", border: "1px solid var(--border)", marginBottom: 8, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <img 
+                            src={`/features/${f}.jpeg`} 
+                            alt={FEATURE_LABELS[f] ?? f} 
+                            style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+                            onError={(e) => {
+                              const parent = e.currentTarget.parentElement?.parentElement;
+                              if (parent) parent.style.display = 'none';
+                            }} 
+                          />
+                        </div>
+                        <p style={{ fontSize: "0.65rem", color: "var(--text)", textAlign: "center", lineHeight: 1.2, fontWeight: 500 }}>{FEATURE_LABELS[f] ?? f}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               {/* CTA buttons */}

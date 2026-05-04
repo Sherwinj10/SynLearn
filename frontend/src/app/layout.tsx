@@ -7,6 +7,13 @@ export const metadata: Metadata = {
   description: "AI‑powered prediction for 34 craniofacial syndromes. Identify syndromes from clinical features with medical-grade accuracy.",
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">

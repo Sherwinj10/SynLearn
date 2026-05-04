@@ -44,3 +44,11 @@ yarn-error.log*
 next-env.d.ts
 backend/syndlearn_model.pkl
 frontend/public/hero-background.png
+
+# Ignored from refactoring
+unused_files/
+scripts/
+cleanup.sh
+Data/
+ml_training/
+docs/
