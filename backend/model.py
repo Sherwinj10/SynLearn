@@ -4,16 +4,16 @@ import warnings
 import os
 
 # Resolve model path relative to this file
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "..", "syndlearn_model.pkl")
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "syndlearn_model_136F.pkl")
 
 print(f"DEBUG: Attempting to load model from: {os.path.abspath(MODEL_PATH)}")
 if not os.path.exists(MODEL_PATH):
     print(f"CRITICAL: Model file NOT found at {MODEL_PATH}")
-    # Fallback to local check if .. failed for some reason
-    LOCAL_PATH = os.path.join(os.path.dirname(__file__), "syndlearn_model.pkl")
+    # Fallback to check parent directory just in case
+    LOCAL_PATH = os.path.join(os.path.dirname(__file__), "..", "syndlearn_model_136F.pkl")
     if os.path.exists(LOCAL_PATH):
         MODEL_PATH = LOCAL_PATH
-        print("DEBUG: Found model locally in backend/")
+        print("DEBUG: Found model locally in parent directory/")
 
 # Suppress sklearn version mismatch warning (1.7.2 trained → 1.6.1 runtime)
 with warnings.catch_warnings():

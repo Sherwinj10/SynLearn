@@ -1,8 +1,10 @@
 # Git Push Fix Instructions
 
-We missed one tiny thing! Your local Git history has several "draft" commits from our previous attempts, and one of those older commits still has the large file tracked the "wrong" way (without LFS). Hugging Face rejects the push if *any* commit being pushed contains a >10MB file without LFS.
+I found the exact reason for the `422 Unprocessable Entity` error! Your backend code (`backend/model.py`) was still hardcoded to load the old 30-feature model (`syndlearn_model.pkl`), so it rejected all the new 136 features the frontend sent it.
 
-To fix this, we will squash all your unpushed commits into a single, clean commit where LFS is properly configured from the start.
+**I have just fixed `backend/model.py` for you!**
+
+Now, let's squash all your commits into one clean package to bypass the Hugging Face error from earlier and push everything perfectly.
 
 Please run these commands **one by one in this exact order**:
 
@@ -16,7 +18,7 @@ git reset --soft origin/main
 git lfs track "*.pkl"
 ```
 
-### 3. Add everything and commit as one clean package
+### 3. Add everything (including the bug fix!) and commit
 ```bash
 git add .
 git commit -m "feat: upgrade model to 136 features, refresh frontend, and add model via LFS"
