@@ -3,7 +3,7 @@ import { useState, useMemo, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Dna, Search, X, ArrowRight, Zap, ChevronRight } from "lucide-react";
-import { FEATURE_GROUPS, FEATURE_LABELS } from "@/lib/data";
+import { FEATURE_GROUPS, FEATURE_LABELS, ALL_FEATURES } from "@/lib/data";
 
 const API = "/api";
 
@@ -198,7 +198,7 @@ function FeatureSelector({ onResult }: { onResult: () => void }) {
         <div style={{ marginTop: 32, paddingTop: 24, borderTop: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             <span style={{ fontFamily: "var(--mono)", fontSize: "0.75rem", color: "var(--text-muted)" }}>
-              <span style={{ color: selected.length ? "var(--cyan)" : "var(--text-muted)", fontWeight: 700 }}>{selected.length}</span> / 30 selected
+              <span style={{ color: selected.length ? "var(--cyan)" : "var(--text-muted)", fontWeight: 700 }}>{selected.length}</span> / {ALL_FEATURES.length} selected
             </span>
             {selected.length > 0 && (
               <button onClick={() => setSelected([])} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--text-muted)", fontSize: "0.75rem", fontFamily: "var(--sans)", display: "flex", alignItems: "center", gap: 4 }}>

@@ -46,20 +46,23 @@ for f in features:
     else:
         groups["Other / Organs"].append(f)
 
-with open("/Users/sherwinj/VSCode/synlearn-v2/frontend/src/lib/generated_data.ts", "w") as out:
-    out.write("export const FEATURE_GROUPS = [\n")
-    for grp, f_list in groups.items():
-        if not f_list: continue
-        out.write("  {\n")
-        out.write(f"    group: \"{grp}\",\n")
-        f_str = ", ".join(f'"{x}"' for x in f_list)
-        out.write(f"    features: [{f_str}],\n")
-        out.write("  },\n")
-    out.write("];\n\n")
+import sys
 
-    out.write("export const ALL_FEATURES: string[] = FEATURE_GROUPS.flatMap((g) => g.features);\n\n")
+out = sys.stdout
 
-    out.write("export const FEATURE_LABELS: Record<string, string> = {\n")
-    for f in features:
-        out.write(f'  {f}: "{label_it(f)}",\n')
-    out.write("};\n")
+out.write("export const FEATURE_GROUPS = [\n")
+for grp, f_list in groups.items():
+    if not f_list: continue
+    out.write("  {\n")
+    out.write(f"    group: \"{grp}\",\n")
+    f_str = ", ".join(f'"{x}"' for x in f_list)
+    out.write(f"    features: [{f_str}],\n")
+    out.write("  },\n")
+out.write("];\n\n")
+
+out.write("export const ALL_FEATURES: string[] = FEATURE_GROUPS.flatMap((g) => g.features);\n\n")
+
+out.write("export const FEATURE_LABELS: Record<string, string> = {\n")
+for f in features:
+    out.write(f'  {f}: "{label_it(f)}",\n')
+out.write("};\n")
