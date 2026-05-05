@@ -245,22 +245,26 @@ export default function ResultPage() {
             {/* Right — Image + Top 5 */}
             <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
               {/* Image */}
-              {syn && (
+              {syn && result.active_features.length > 0 && (
                 <motion.button
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 0.1 }}
-                  onClick={() => setLightbox({ src: syn.image, name: syn.name })}
+                  onClick={() => setLightbox({ src: `/features/${result.active_features[0]}.jpeg`, name: FEATURE_LABELS[result.active_features[0]] ?? result.active_features[0] })}
                   style={{ width: "100%", height: 220, borderRadius: 20, overflow: "hidden", border: "1px solid var(--border)", cursor: "zoom-in", position: "relative", background: "none", padding: 0 }}
                   className="card-hover"
                 >
-                  <img src={syn.image} alt={syn.name} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s" }}
+                  <img src={`/features/${result.active_features[0]}.jpeg`} alt={FEATURE_LABELS[result.active_features[0]] ?? result.active_features[0]} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s" }}
                     onMouseEnter={e => ((e.target as HTMLImageElement).style.transform = "scale(1.05)")}
                     onMouseLeave={e => ((e.target as HTMLImageElement).style.transform = "scale(1)")}
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                   />
                   <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to top, ${color}88 0%, transparent 60%)` }} />
                   <div style={{ position: "absolute", bottom: 14, left: 14, right: 14, display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-                    <span style={{ color: "#fff", fontWeight: 700, fontSize: "0.95rem", fontFamily: "var(--display)" }}>{syn.name}</span>
+                    <span style={{ color: "#fff", fontWeight: 700, fontSize: "0.95rem", fontFamily: "var(--display)", textAlign: "left" }}>
+                      Matched Feature:<br/>
+                      <span style={{ fontSize: "0.8rem", fontWeight: 500, color: "rgba(255,255,255,0.8)" }}>{FEATURE_LABELS[result.active_features[0]] ?? result.active_features[0]}</span>
+                    </span>
                     <span style={{ background: "rgba(0,0,0,0.5)", color: "rgba(255,255,255,0.8)", fontSize: "0.65rem", padding: "4px 9px", borderRadius: 100, backdropFilter: "blur(8px)" }}>Click to expand</span>
                   </div>
                 </motion.button>
