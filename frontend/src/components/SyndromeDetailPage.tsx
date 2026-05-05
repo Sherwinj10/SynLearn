@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, X, Maximize2 } from "lucide-react";
 import { SyndromeContent } from "@/lib/syndromeContent";
 import { FEATURE_LABELS } from "@/lib/data";
+import { FEATURE_DEFINITIONS } from "@/lib/feature_definitions";
 
 const SECTION_META: { key: keyof SyndromeContent["sections"]; label: string }[] = [
   { key: "definition", label: "Definition" },
@@ -163,7 +164,7 @@ export function SyndromeDetailPage({ syndrome }: { syndrome: SyndromeContent }) 
     <div style={{ minHeight: "100vh", paddingBottom: 100 }}>
       {/* Hero Section */}
       <section
-        style={{ height: "45vh", position: "relative", overflow: "hidden" }}
+        style={{ minHeight: "45vh", paddingBottom: 80, position: "relative", overflow: "hidden" }}
       >
         <div style={{
           position: "absolute", inset: 0,
@@ -171,8 +172,8 @@ export function SyndromeDetailPage({ syndrome }: { syndrome: SyndromeContent }) 
         }} />
 
         <div style={{
-          position: "absolute", top: 100, left: "5%", zIndex: 10,
-          maxWidth: 1200, padding: "0 24px"
+          padding: "100px 5% 40px", position: "relative", zIndex: 10,
+          maxWidth: 1200
         }}
           onClick={e => e.stopPropagation()}
         >
@@ -239,9 +240,9 @@ export function SyndromeDetailPage({ syndrome }: { syndrome: SyndromeContent }) 
             </div>
             <div style={{ display: "flex", gap: 16, overflowX: "auto", paddingBottom: 16, scrollbarWidth: "none", msOverflowStyle: "none" }}>
               {uniqueFeatureIds.map((fid, idx) => (
-                <div key={fid} style={{ flexShrink: 0, width: 140 }}>
+                <div key={fid} style={{ flexShrink: 0, width: 170 }}>
                   <div 
-                    style={{ width: 140, height: 140, borderRadius: 16, overflow: "hidden", background: "var(--bg)", border: "1px solid var(--border)", marginBottom: 12, cursor: "zoom-in" }}
+                    style={{ width: 170, height: 170, borderRadius: 16, overflow: "hidden", background: "var(--bg)", border: "1px solid var(--border)", marginBottom: 14, cursor: "zoom-in" }}
                     onClick={() => {
                       setCurrentImgIdx(idx);
                       setLightboxOpen(true);
@@ -257,8 +258,11 @@ export function SyndromeDetailPage({ syndrome }: { syndrome: SyndromeContent }) 
                       }}
                     />
                   </div>
-                  <p style={{ fontSize: "0.8rem", color: "var(--text)", textAlign: "center", lineHeight: 1.3, fontWeight: 500 }}>
+                  <p style={{ fontSize: "0.95rem", color: "var(--text)", textAlign: "center", lineHeight: 1.3, fontWeight: 600 }}>
                     {FEATURE_LABELS[fid] ?? fid}
+                  </p>
+                  <p style={{ fontSize: "0.8rem", color: "var(--text-muted)", textAlign: "center", lineHeight: 1.4, marginTop: 8, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                    {FEATURE_DEFINITIONS[normalize(FEATURE_LABELS[fid] ?? "")]}
                   </p>
                 </div>
               ))}
@@ -330,9 +334,14 @@ export function SyndromeDetailPage({ syndrome }: { syndrome: SyndromeContent }) 
                 </button>
               )}
 
-              {/* Counter Indicator */}
-              <div style={{ position: "absolute", bottom: -40, left: "50%", transform: "translateX(-50%)", color: "rgba(255,255,255,0.5)", fontSize: "0.85rem", fontFamily: "var(--mono)" }}>
-                {FEATURE_LABELS[uniqueFeatureIds[currentImgIdx]]} ({currentImgIdx + 1} / {uniqueFeatureIds.length})
+              {/* Counter Indicator and Definition */}
+              <div style={{ position: "absolute", bottom: -80, left: "50%", transform: "translateX(-50%)", textAlign: "center", width: "100%", maxWidth: 600 }}>
+                <div style={{ color: "rgba(255,255,255,0.9)", fontSize: "1.1rem", fontFamily: "var(--mono)", marginBottom: 8 }}>
+                  {FEATURE_LABELS[uniqueFeatureIds[currentImgIdx]]} ({currentImgIdx + 1} / {uniqueFeatureIds.length})
+                </div>
+                <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.95rem", lineHeight: 1.5 }}>
+                  {FEATURE_DEFINITIONS[normalize(FEATURE_LABELS[uniqueFeatureIds[currentImgIdx]] ?? "")]}
+                </div>
               </div>
             </div>
           </motion.div>

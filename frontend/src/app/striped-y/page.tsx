@@ -157,7 +157,7 @@ export default function StripedYPage() {
       <div style={{ maxWidth: 1100, margin: "24px auto", padding: "0 24px", display: "flex", flexDirection: "column", gap: 24 }}>
 
         {/* Top grid: Diagram on Left, Controls on Right */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, alignItems: "start" }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
 
           {/* Left Column: SVG Diagram */}
           <div className="card" style={{ padding: 24 }}>
@@ -259,7 +259,7 @@ export default function StripedYPage() {
             <div className="card" style={{ padding: 24 }}>
               <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--text)", marginBottom: 4 }}>VP Competence</h2>
               <p style={{ fontSize: "0.85rem", color: "var(--text-muted)", marginBottom: 16 }}>Assessed via dotted line to Pharynx circle (Seg 12)</p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {[
                   { id: "none", label: "✅ Adequate VP", c: "#22a06b" },
                   { id: "mild", label: "🟡 Mild VPD", c: "#c08a00" },
@@ -287,7 +287,7 @@ export default function StripedYPage() {
         </div>
 
         {/* Bottom grid: Classification & Summary */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, alignItems: "start", marginTop: 8 }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-2">
 
           {/* Auto-Classification */}
           <div className="card" style={{ padding: 24, minHeight: 300 }}>
@@ -299,7 +299,7 @@ export default function StripedYPage() {
               </div>
             ) : (
               <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div style={{ background: "var(--surface-2)", padding: 16, borderRadius: 8, border: "1px solid var(--border)" }}>
                     <div style={{ fontSize: "0.75rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 6 }}>Cleft Type</div>
                     <div style={{ fontSize: "1rem", fontWeight: 700, color: "var(--cyan)" }}>{classif.type}</div>
