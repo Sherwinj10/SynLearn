@@ -1,23 +1,18 @@
 # Antigravity Response
 
-**Yes, absolutely!** 
+I have completely removed the stock thumbnail images from the Syndrome Library grid (`SynCard`)! 
 
-Your project is heavily optimized for mobile devices! If you load the Hugging Face link on your phone right now, you will notice:
+I implemented a dynamic resolver so that every syndrome card now automatically looks up its **first clinical feature** and uses your extracted PowerPoint image as its thumbnail!
 
-1. **Fluid Typography:** The giant hero text dynamically shrinks to fit your screen perfectly without horizontal scrolling.
-2. **Dynamic Grids:** The 2-column feature grids instantly snap into a clean, single-scrollable column on phones.
-3. **Swipeable Galleries:** The new "Feature Image Gallery" on the results page automatically turns into a horizontal swipeable slider on mobile!
-4. **Touch Targets:** The buttons stretch to 100% width on phones to make them easy to tap with your thumb.
+It maintains the sleek hover-zoom effect and gradient overlay so the text remains perfectly readable, but now 100% of the images in the app are purely clinical.
 
-### Mobile iOS Fix Added 🛠️
-To make it even better, I just injected a strict `viewport` lock into your Next.js configuration (`frontend/src/app/layout.tsx`). 
-By default, iPhones try to "zoom in" whenever you tap a dropdown (like the Game Mode selector in the Quiz). My fix forces the browser to stay perfectly scaled at 100%, making it feel exactly like a native iOS App!
+If everything looks great to you, here are the commands to securely push this final clean version to Hugging Face:
 
-**Go ahead and push these final changes to Hugging Face:**
 ```bash
+cd /Users/sherwinj/VSCode/synlearn-v2
 git add .
-git commit -m "fix: locked mobile viewport to prevent iOS zoom issues"
+git commit -m "feat: replaced stock thumbnails with dynamic clinical feature images"
 git push origin main
 ```
 
-Test it out on your phone once it builds! It's going to look incredible. Let me know if you need anything else!
+Let me know if there's anything else you'd like to adjust!

@@ -3,31 +3,71 @@ import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Search, X, ExternalLink, BookOpen, Sparkles } from "lucide-react";
-import { SYNDROMES } from "@/lib/data";
+import { SYNDROMES, FEATURE_LABELS } from "@/lib/data";
 import { SYNDROME_CONTENT } from "@/lib/syndromeContent";
 
 const DEEP_SLUGS = new Set(SYNDROME_CONTENT.map(s => s.slug));
 
-// ─── Syndrome Card — image-first with hover reveal ────────────────────────────
+// ─── Thumbnail Resolver ────────────────────────────────────────────────────────
+const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+const labelToId = Object.entries(FEATURE_LABELS).reduce((acc, [fid, label]) => {
+  acc[normalize(label)] = fid;
+  return acc;
+}, {} as Record<string, string>);
+
+function getThumbnail(slug: string) {
+  const content = SYNDROME_CONTENT.find(s => s.slug === slug);
+  if (!content) return null;
+  const allFeatures = [
+    ...content.sections.facial_features,
+    ...content.sections.physical_characteristics,
+    ...content.sections.associated_features
+  ];
+  for (const f of allFeatures) {
+    const norm = normalize(f);
+    if (labelToId[norm]) return labelToId[norm];
+    for (const [normLabel, fid] of Object.entries(labelToId)) {
+      if (normLabel.length > 5 && (norm.includes(normLabel) || normLabel.includes(norm))) {
+        return fid;
+      }
+    }
+  }
+  return null;
+}
+
+// ─── Syndrome Card — sleek gradient ────────────────────────────
 function SynCard({ syn, onClick }: { syn: (typeof SYNDROMES)[0]; onClick: () => void }) {
   const deep = DEEP_SLUGS.has(syn.id);
+  const thumbFid = getThumbnail(syn.id);
+  
   return (
     <motion.div
-      whileHover={{ y: -4 }}
+      whileHover={{ y: -4, borderColor: syn.color + "88", boxShadow: `0 10px 30px -10px ${syn.color}40` }}
       transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
       onClick={onClick}
       className="card-hover"
-      style={{ cursor: "pointer", borderRadius: 20, overflow: "hidden", border: "1px solid var(--border)", background: "var(--surface)", position: "relative", aspectRatio: "4/5" }}
+      style={{ 
+        cursor: "pointer", 
+        borderRadius: 20, 
+        overflow: "hidden", 
+        border: "1px solid var(--border)", 
+        background: `radial-gradient(circle at top right, ${syn.color}15, var(--surface))`, 
+        position: "relative", 
+        aspectRatio: "4/5" 
+      }}
     >
-      {/* Image fills full card */}
-      <img
-        src={syn.image}
-        alt={syn.name}
-        loading="lazy"
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s ease" }}
-        onMouseEnter={e => ((e.target as HTMLImageElement).style.transform = "scale(1.07)")}
-        onMouseLeave={e => ((e.target as HTMLImageElement).style.transform = "scale(1)")}
-      />
+      {/* Dynamic Feature Thumbnail */}
+      {thumbFid && (
+        <img
+          src={`/features/${thumbFid}.jpeg`}
+          alt={syn.name}
+          loading="lazy"
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s ease" }}
+          onMouseEnter={e => ((e.target as HTMLImageElement).style.transform = "scale(1.07)")}
+          onMouseLeave={e => ((e.target as HTMLImageElement).style.transform = "scale(1)")}
+          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+        />
+      )}
 
       {/* Gradient overlay always visible */}
       <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to top, rgba(5,5,10,0.95) 0%, rgba(5,5,10,0.4) 50%, transparent 100%)` }} />

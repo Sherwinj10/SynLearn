@@ -4,19 +4,20 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, X, Maximize2 } from "lucide-react";
 import { SyndromeContent } from "@/lib/syndromeContent";
+import { FEATURE_LABELS } from "@/lib/data";
 
 const SECTION_META: { key: keyof SyndromeContent["sections"]; label: string }[] = [
-  { key: "definition",               label: "Definition" },
-  { key: "etiology",                 label: "Etiology" },
-  { key: "incidence",                label: "Incidence & Prevalence" },
-  { key: "classification",           label: "Classification" },
-  { key: "pathophysiology",          label: "Pathophysiology" },
-  { key: "facial_features",          label: "Facial Features" },
+  { key: "definition", label: "Definition" },
+  { key: "etiology", label: "Etiology" },
+  { key: "incidence", label: "Incidence & Prevalence" },
+  { key: "classification", label: "Classification" },
+  { key: "pathophysiology", label: "Pathophysiology" },
+  { key: "facial_features", label: "Facial Features" },
   { key: "physical_characteristics", label: "Physical Characteristics" },
-  { key: "associated_features",      label: "Associated Features" },
-  { key: "speech_language",          label: "Speech & Language" },
-  { key: "recommendations",          label: "Recommendations" },
-  { key: "references",               label: "References" },
+  { key: "associated_features", label: "Associated Features" },
+  { key: "speech_language", label: "Speech & Language" },
+  { key: "recommendations", label: "Recommendations" },
+  { key: "references", label: "References" },
 ];
 
 function SectionCard({
@@ -65,22 +66,22 @@ function SectionCard({
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div style={{ 
-            width: 8, height: 24, borderRadius: 4, 
+          <div style={{
+            width: 8, height: 24, borderRadius: 4,
             background: isOpen ? color : "var(--border)",
             transition: "background 0.4s"
           }} />
-          <span style={{ 
-            fontFamily: "var(--display)", 
-            fontSize: "1.1rem", 
-            fontWeight: 700, 
+          <span style={{
+            fontFamily: "var(--display)",
+            fontSize: "1.1rem",
+            fontWeight: 700,
             color: isOpen ? "var(--text)" : "var(--text-muted)",
             transition: "color 0.4s"
           }}>
             {label}
           </span>
         </div>
-        <div style={{ 
+        <div style={{
           color: isOpen ? color : "var(--text-muted)",
           transition: "color 0.4s"
         }}>
@@ -122,74 +123,66 @@ export function SyndromeDetailPage({ syndrome }: { syndrome: SyndromeContent }) 
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImgIdx, setCurrentImgIdx] = useState(0);
 
-  const images = syndrome.images && syndrome.images.length > 0 
-    ? syndrome.images 
-    : [syndrome.image];
+  // ─── Resolve Feature Images ──────────────────────────────────────────────────
+  const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const labelToId = Object.entries(FEATURE_LABELS).reduce((acc, [fid, label]) => {
+    acc[normalize(label)] = fid;
+    return acc;
+  }, {} as Record<string, string>);
+
+  const allFeatures = [
+    ...syndrome.sections.facial_features,
+    ...syndrome.sections.physical_characteristics,
+    ...syndrome.sections.associated_features
+  ];
+
+  const matchedFeatureIds = allFeatures.map(f => {
+    const norm = normalize(f);
+    if (labelToId[norm]) return labelToId[norm];
+    for (const [normLabel, fid] of Object.entries(labelToId)) {
+      if (normLabel.length > 5 && (norm.includes(normLabel) || normLabel.includes(norm))) {
+        return fid;
+      }
+    }
+    return null;
+  }).filter(Boolean) as string[];
+
+  const uniqueFeatureIds = Array.from(new Set(matchedFeatureIds));
 
   const nextImg = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    setCurrentImgIdx((prev) => (prev + 1) % images.length);
+    setCurrentImgIdx((prev) => (prev + 1) % uniqueFeatureIds.length);
   };
 
   const prevImg = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    setCurrentImgIdx((prev) => (prev - 1 + images.length) % images.length);
+    setCurrentImgIdx((prev) => (prev - 1 + uniqueFeatureIds.length) % uniqueFeatureIds.length);
   };
 
   return (
     <div style={{ minHeight: "100vh", paddingBottom: 100 }}>
       {/* Hero Section */}
-      <section 
-        style={{ height: "70vh", position: "relative", overflow: "hidden", cursor: "zoom-in" }}
-        onClick={() => {
-          setCurrentImgIdx(0);
-          setLightboxOpen(true);
-        }}
+      <section
+        style={{ height: "45vh", position: "relative", overflow: "hidden" }}
       >
-        <motion.img 
-          initial={{ scale: 1.1 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          src={syndrome.image} 
-          alt={syndrome.name}
-          style={{ width: "100%", height: "100%", objectFit: "cover", position: "absolute", top: 0, left: 0 }}
-        />
-        <div style={{ 
-          position: "absolute", inset: 0, 
-          background: `linear-gradient(to top, var(--bg) 0%, rgba(5,5,10,0.6) 40%, transparent 100%)` 
-        }} />
-        <div style={{ 
-          position: "absolute", inset: 0, 
-          background: `linear-gradient(to right, var(--bg) 0%, transparent 80%)`,
-          opacity: 0.8
+        <div style={{
+          position: "absolute", inset: 0,
+          background: `radial-gradient(circle at top right, ${syndrome.color}20, transparent 60%), linear-gradient(to bottom, var(--bg) 0%, ${syndrome.color}05 100%)`
         }} />
 
-        {/* View Gallery Badge */}
-        <div style={{ 
-          position: "absolute", bottom: 80, right: 40, zIndex: 10,
-          display: "flex", alignItems: "center", gap: 10,
-          background: "rgba(0,0,0,0.4)", backdropFilter: "blur(12px)",
-          border: "1px solid rgba(255,255,255,0.1)", padding: "10px 20px",
-          borderRadius: 100, color: "rgba(255,255,255,0.8)", fontSize: "0.8rem",
-          fontWeight: 600
-        }}>
-          <Maximize2 size={14} />
-          View Gallery {images.length > 1 && `(${images.length})`}
-        </div>
-
-        <div style={{ 
+        <div style={{
           position: "absolute", top: 100, left: "5%", zIndex: 10,
           maxWidth: 1200, padding: "0 24px"
         }}
-        onClick={e => e.stopPropagation()}
+          onClick={e => e.stopPropagation()}
         >
           <motion.button
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4 }}
             onClick={() => router.back()}
-            style={{ 
-              display: "flex", alignItems: "center", gap: 8, 
+            style={{
+              display: "flex", alignItems: "center", gap: 8,
               background: "rgba(255,255,255,0.05)", backdropFilter: "blur(12px)",
               border: "1px solid var(--border)", padding: "10px 16px", borderRadius: 100,
               color: "var(--text)", fontSize: "0.85rem", fontWeight: 500,
@@ -205,24 +198,24 @@ export function SyndromeDetailPage({ syndrome }: { syndrome: SyndromeContent }) 
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div style={{ 
-              fontFamily: "var(--mono)", fontSize: "0.75rem", letterSpacing: "0.2em", 
+            <div style={{
+              fontFamily: "var(--mono)", fontSize: "0.75rem", letterSpacing: "0.2em",
               textTransform: "uppercase", color: syndrome.color, marginBottom: 16,
               display: "flex", alignItems: "center", gap: 8
             }}>
               <span style={{ width: 24, height: 1, background: syndrome.color }} />
               Syndrome Intelligence
             </div>
-            <h1 style={{ 
-              fontFamily: "var(--display)", fontSize: "clamp(2.5rem, 6vw, 5rem)", 
+            <h1 style={{
+              fontFamily: "var(--display)", fontSize: "clamp(2.5rem, 6vw, 5rem)",
               fontWeight: 800, color: "var(--text)", letterSpacing: "-0.04em",
               lineHeight: 1.1, marginBottom: 20
             }}>
               {syndrome.name}
             </h1>
-            <p style={{ 
-              fontSize: "1.1rem", color: "var(--text-subtle)", maxWidth: 600, 
-              lineHeight: 1.6, marginBottom: 32 
+            <p style={{
+              fontSize: "1.1rem", color: "var(--text-subtle)", maxWidth: 600,
+              lineHeight: 1.6, marginBottom: 32
             }}>
               {syndrome.subtitle}
             </p>
@@ -232,9 +225,51 @@ export function SyndromeDetailPage({ syndrome }: { syndrome: SyndromeContent }) 
 
       {/* Content Section */}
       <div style={{ maxWidth: 1000, margin: "-60px auto 0", padding: "0 24px", position: "relative", zIndex: 20 }}>
+        {/* Feature Image Gallery (Moved to top) */}
+        {uniqueFeatureIds.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            style={{ marginBottom: 40, background: "var(--surface)", padding: 24, borderRadius: 24, border: "1px solid var(--border)", boxShadow: "0 8px 32px rgba(0,0,0,0.2)" }}
+          >
+            <div className="divider" style={{ marginBottom: 24 }}>
+              <span>Clinical Features Gallery</span>
+            </div>
+            <div style={{ display: "flex", gap: 16, overflowX: "auto", paddingBottom: 16, scrollbarWidth: "none", msOverflowStyle: "none" }}>
+              {uniqueFeatureIds.map((fid, idx) => (
+                <div key={fid} style={{ flexShrink: 0, width: 140 }}>
+                  <div 
+                    style={{ width: 140, height: 140, borderRadius: 16, overflow: "hidden", background: "var(--bg)", border: "1px solid var(--border)", marginBottom: 12, cursor: "zoom-in" }}
+                    onClick={() => {
+                      setCurrentImgIdx(idx);
+                      setLightboxOpen(true);
+                    }}
+                  >
+                    <img
+                      src={`/features/${fid}.jpeg`}
+                      alt={FEATURE_LABELS[fid] ?? fid}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      onError={(e) => {
+                        const parent = e.currentTarget.parentElement?.parentElement;
+                        if (parent) parent.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                  <p style={{ fontSize: "0.8rem", color: "var(--text)", textAlign: "center", lineHeight: 1.3, fontWeight: 500 }}>
+                    {FEATURE_LABELS[fid] ?? fid}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* Description Sections */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 0 }}>
           {SECTION_META.map((meta, i) => (
-            <SectionCard 
+            <SectionCard
               key={meta.key}
               index={i}
               label={meta.label}
@@ -253,14 +288,14 @@ export function SyndromeDetailPage({ syndrome }: { syndrome: SyndromeContent }) 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            style={{ 
+            style={{
               position: "fixed", inset: 0, background: "rgba(0,0,0,0.95)",
-              zIndex: 1000, display: "flex", alignItems: "center", 
+              zIndex: 1000, display: "flex", alignItems: "center",
               justifyContent: "center", backdropFilter: "blur(20px)"
             }}
             onClick={() => setLightboxOpen(false)}
           >
-            <button 
+            <button
               style={{ position: "absolute", top: 40, right: 40, background: "none", border: "none", color: "#fff", cursor: "pointer" }}
               onClick={() => setLightboxOpen(false)}
             >
@@ -268,8 +303,8 @@ export function SyndromeDetailPage({ syndrome }: { syndrome: SyndromeContent }) 
             </button>
 
             <div style={{ position: "relative", maxWidth: "90vw", maxHeight: "80vh", display: "flex", alignItems: "center" }} onClick={e => e.stopPropagation()}>
-              {images.length > 1 && (
-                <button 
+              {uniqueFeatureIds.length > 1 && (
+                <button
                   onClick={prevImg}
                   style={{ position: "absolute", left: -60, background: "rgba(255,255,255,0.1)", border: "none", padding: 12, borderRadius: "50%", color: "#fff", cursor: "pointer" }}
                 >
@@ -277,17 +312,17 @@ export function SyndromeDetailPage({ syndrome }: { syndrome: SyndromeContent }) 
                 </button>
               )}
 
-              <motion.img 
+              <motion.img
                 key={currentImgIdx}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                src={images[currentImgIdx]}
-                alt={`${syndrome.name} - ${currentImgIdx + 1}`}
+                src={`/features/${uniqueFeatureIds[currentImgIdx]}.jpeg`}
+                alt={`${syndrome.name} - feature ${currentImgIdx + 1}`}
                 style={{ width: "100%", height: "100%", objectFit: "contain", borderRadius: 12 }}
               />
 
-              {images.length > 1 && (
-                <button 
+              {uniqueFeatureIds.length > 1 && (
+                <button
                   onClick={nextImg}
                   style={{ position: "absolute", right: -60, background: "rgba(255,255,255,0.1)", border: "none", padding: 12, borderRadius: "50%", color: "#fff", cursor: "pointer" }}
                 >
@@ -297,7 +332,7 @@ export function SyndromeDetailPage({ syndrome }: { syndrome: SyndromeContent }) 
 
               {/* Counter Indicator */}
               <div style={{ position: "absolute", bottom: -40, left: "50%", transform: "translateX(-50%)", color: "rgba(255,255,255,0.5)", fontSize: "0.85rem", fontFamily: "var(--mono)" }}>
-                {currentImgIdx + 1} / {images.length}
+                {FEATURE_LABELS[uniqueFeatureIds[currentImgIdx]]} ({currentImgIdx + 1} / {uniqueFeatureIds.length})
               </div>
             </div>
           </motion.div>
