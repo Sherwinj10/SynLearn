@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, X, ExternalLink, RefreshCw, ChevronDown, ChevronUp } from "lucide-react";
+import { ArrowLeft, X, ExternalLink, RefreshCw, ChevronDown, ChevronUp, ChevronLeft, ChevronRight } from "lucide-react";
 import { SYNDROMES, FEATURE_LABELS, MODEL_NAME_TO_SLUG } from "@/lib/data";
 
 type ApiResult = {
