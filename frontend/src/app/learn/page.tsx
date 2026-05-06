@@ -8,58 +8,30 @@ import { SYNDROME_CONTENT } from "@/lib/syndromeContent";
 
 const DEEP_SLUGS = new Set(SYNDROME_CONTENT.map(s => s.slug));
 
-// ─── Thumbnail Resolver ────────────────────────────────────────────────────────
-const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
-const labelToId = Object.entries(FEATURE_LABELS).reduce((acc, [fid, label]) => {
-  acc[normalize(label)] = fid;
-  return acc;
-}, {} as Record<string, string>);
-
-function getThumbnail(slug: string) {
-  const content = SYNDROME_CONTENT.find(s => s.slug === slug);
-  if (!content) return null;
-  const allFeatures = [
-    ...content.sections.facial_features,
-    ...content.sections.physical_characteristics,
-    ...content.sections.associated_features
-  ];
-  for (const f of allFeatures) {
-    const norm = normalize(f);
-    if (labelToId[norm]) return labelToId[norm];
-    for (const [normLabel, fid] of Object.entries(labelToId)) {
-      if (normLabel.length > 5 && (norm.includes(normLabel) || normLabel.includes(norm))) {
-        return fid;
-      }
-    }
-  }
-  return null;
-}
-
 // ─── Syndrome Card — sleek gradient ────────────────────────────
 function SynCard({ syn, onClick }: { syn: (typeof SYNDROMES)[0]; onClick: () => void }) {
   const deep = DEEP_SLUGS.has(syn.id);
-  const thumbFid = getThumbnail(syn.id);
-  
+
   return (
     <motion.div
       whileHover={{ y: -4, borderColor: syn.color + "88", boxShadow: `0 10px 30px -10px ${syn.color}40` }}
       transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
       onClick={onClick}
       className="card-hover"
-      style={{ 
-        cursor: "pointer", 
-        borderRadius: 20, 
-        overflow: "hidden", 
-        border: "1px solid var(--border)", 
-        background: `radial-gradient(circle at top right, ${syn.color}15, var(--surface))`, 
-        position: "relative", 
-        aspectRatio: "4/5" 
+      style={{
+        cursor: "pointer",
+        borderRadius: 20,
+        overflow: "hidden",
+        border: "1px solid var(--border)",
+        background: `radial-gradient(circle at top right, ${syn.color}15, var(--surface))`,
+        position: "relative",
+        aspectRatio: "4/5"
       }}
     >
-      {/* Dynamic Feature Thumbnail */}
-      {thumbFid && (
+      {/* Dynamic Syndrome Thumbnail */}
+      {syn.image && (
         <img
-          src={`/features/${thumbFid}.jpeg`}
+          src={syn.image.startsWith('http') ? syn.image : syn.image}
           alt={syn.name}
           loading="lazy"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s ease" }}
@@ -134,7 +106,7 @@ export default function LearnPage() {
                 Structured medical knowledge on 34 craniofacial syndromes — etiology, genetics, speech characteristics, and clinical recommendations.
               </p>
               <button onClick={() => router.push("/learn/quiz")} className="btn btn-primary" style={{ padding: "12px 24px", fontSize: "0.9rem" }}>
-                <Sparkles size={16} /> Enter AI Quiz Mode
+                <Sparkles size={16} /> Enter Quiz Mode
               </button>
             </div>
           </div>

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, ChevronDown, ChevronUp, ChevronLeft, ChevronRight, X, Maximize2 } from "lucide-react";
 import { SyndromeContent } from "@/lib/syndromeContent";
-import { FEATURE_LABELS } from "@/lib/data";
+import { FEATURE_LABELS, SYNDROMES } from "@/lib/data";
 import { FEATURE_DEFINITIONS } from "@/lib/feature_definitions";
 
 const SECTION_META: { key: keyof SyndromeContent["sections"]; label: string }[] = [
@@ -150,21 +150,39 @@ export function SyndromeDetailPage({ syndrome }: { syndrome: SyndromeContent }) 
 
   const uniqueFeatureIds = Array.from(new Set(matchedFeatureIds));
 
+  // Find the base data from SYNDROMES to get the correct main image and shortDesc
+  const baseData = SYNDROMES.find(s => s.id === syndrome.slug);
+
+  const galleryItems = [
+    { 
+      type: 'syndrome', 
+      src: baseData?.image || syndrome.image, 
+      title: syndrome.name, 
+      description: baseData?.shortDesc || syndrome.subtitle 
+    },
+    ...uniqueFeatureIds.map(fid => ({
+      type: 'feature',
+      src: `/features/${fid}.jpeg`,
+      title: FEATURE_LABELS[fid] ?? fid,
+      description: FEATURE_DEFINITIONS[normalize(FEATURE_LABELS[fid] ?? "")]
+    }))
+  ];
+
   const nextImg = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    setCurrentImgIdx((prev) => (prev + 1) % uniqueFeatureIds.length);
+    setCurrentImgIdx((prev) => (prev + 1) % galleryItems.length);
   };
 
   const prevImg = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    setCurrentImgIdx((prev) => (prev - 1 + uniqueFeatureIds.length) % uniqueFeatureIds.length);
+    setCurrentImgIdx((prev) => (prev - 1 + galleryItems.length) % galleryItems.length);
   };
 
   return (
     <div style={{ minHeight: "100vh", paddingBottom: 100 }}>
       {/* Hero Section */}
       <section
-        style={{ minHeight: "45vh", paddingBottom: 80, position: "relative", overflow: "hidden" }}
+        style={{ minHeight: "50vh", paddingBottom: 120, position: "relative", overflow: "hidden" }}
       >
         <div style={{
           position: "absolute", inset: 0,
@@ -227,7 +245,7 @@ export function SyndromeDetailPage({ syndrome }: { syndrome: SyndromeContent }) 
       {/* Content Section */}
       <div style={{ maxWidth: 1000, margin: "-60px auto 0", padding: "0 24px", position: "relative", zIndex: 20 }}>
         {/* Feature Image Gallery (Moved to top) */}
-        {uniqueFeatureIds.length > 0 && (
+        {galleryItems.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -239,8 +257,8 @@ export function SyndromeDetailPage({ syndrome }: { syndrome: SyndromeContent }) 
               <span>Clinical Features Gallery</span>
             </div>
             <div style={{ display: "flex", gap: 16, overflowX: "auto", paddingBottom: 16, scrollbarWidth: "none", msOverflowStyle: "none" }}>
-              {uniqueFeatureIds.map((fid, idx) => (
-                <div key={fid} style={{ flexShrink: 0, width: 170 }}>
+              {galleryItems.map((item, idx) => (
+                <div key={idx} style={{ flexShrink: 0, width: 170 }}>
                   <div 
                     style={{ width: 170, height: 170, borderRadius: 16, overflow: "hidden", background: "var(--bg)", border: "1px solid var(--border)", marginBottom: 14, cursor: "zoom-in" }}
                     onClick={() => {
@@ -249,21 +267,19 @@ export function SyndromeDetailPage({ syndrome }: { syndrome: SyndromeContent }) 
                     }}
                   >
                     <img
-                      src={`/features/${fid}.jpeg`}
-                      alt={FEATURE_LABELS[fid] ?? fid}
+                      src={item.src}
+                      alt={item.title}
                       style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                      onError={(e) => {
-                        const parent = e.currentTarget.parentElement?.parentElement;
-                        if (parent) parent.style.display = 'none';
-                      }}
                     />
                   </div>
                   <p style={{ fontSize: "0.95rem", color: "var(--text)", textAlign: "center", lineHeight: 1.3, fontWeight: 600 }}>
-                    {FEATURE_LABELS[fid] ?? fid}
+                    {item.title}
                   </p>
-                  <p style={{ fontSize: "0.8rem", color: "var(--text-muted)", textAlign: "center", lineHeight: 1.4, marginTop: 8, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
-                    {FEATURE_DEFINITIONS[normalize(FEATURE_LABELS[fid] ?? "")]}
-                  </p>
+                  {item.description && (
+                    <p style={{ fontSize: "0.8rem", color: "var(--text-muted)", textAlign: "center", lineHeight: 1.4, marginTop: 8, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                      {item.description}
+                    </p>
+                  )}
                 </div>
               ))}
             </div>
@@ -306,42 +322,74 @@ export function SyndromeDetailPage({ syndrome }: { syndrome: SyndromeContent }) 
               <X size={32} />
             </button>
 
-            <div style={{ position: "relative", maxWidth: "90vw", maxHeight: "80vh", display: "flex", alignItems: "center" }} onClick={e => e.stopPropagation()}>
-              {uniqueFeatureIds.length > 1 && (
-                <button
-                  onClick={prevImg}
-                  style={{ position: "absolute", left: -60, background: "rgba(255,255,255,0.1)", border: "none", padding: 12, borderRadius: "50%", color: "#fff", cursor: "pointer" }}
-                >
-                  <ChevronLeft size={24} />
-                </button>
-              )}
+            <div 
+              style={{ 
+                display: "flex", 
+                flexDirection: "column", 
+                alignItems: "center", 
+                gap: 24, 
+                maxWidth: "90vw", 
+                maxHeight: "90vh",
+                position: "relative" 
+              }} 
+              onClick={e => e.stopPropagation()}
+            >
+              <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                {galleryItems.length > 1 && (
+                  <button
+                    onClick={prevImg}
+                    style={{ position: "absolute", left: -60, background: "rgba(255,255,255,0.1)", border: "none", padding: 12, borderRadius: "50%", color: "#fff", cursor: "pointer", zIndex: 10 }}
+                  >
+                    <ChevronLeft size={24} />
+                  </button>
+                )}
 
-              <motion.img
-                key={currentImgIdx}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                src={`/features/${uniqueFeatureIds[currentImgIdx]}.jpeg`}
-                alt={`${syndrome.name} - feature ${currentImgIdx + 1}`}
-                style={{ width: "100%", height: "100%", objectFit: "contain", borderRadius: 12 }}
-              />
+                <motion.img
+                  key={currentImgIdx}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  src={galleryItems[currentImgIdx].src}
+                  alt={`${syndrome.name} - slide ${currentImgIdx + 1}`}
+                  style={{ 
+                    maxWidth: "100%", 
+                    maxHeight: "60vh", 
+                    objectFit: "contain", 
+                    borderRadius: 16,
+                    boxShadow: "0 20px 50px rgba(0,0,0,0.5)" 
+                  }}
+                />
 
-              {uniqueFeatureIds.length > 1 && (
-                <button
-                  onClick={nextImg}
-                  style={{ position: "absolute", right: -60, background: "rgba(255,255,255,0.1)", border: "none", padding: 12, borderRadius: "50%", color: "#fff", cursor: "pointer" }}
-                >
-                  <ChevronRight size={24} />
-                </button>
-              )}
+                {galleryItems.length > 1 && (
+                  <button
+                    onClick={nextImg}
+                    style={{ position: "absolute", right: -60, background: "rgba(255,255,255,0.1)", border: "none", padding: 12, borderRadius: "50%", color: "#fff", cursor: "pointer", zIndex: 10 }}
+                  >
+                    <ChevronRight size={24} />
+                  </button>
+                )}
+              </div>
 
-              {/* Counter Indicator and Definition */}
-              <div style={{ position: "absolute", bottom: -80, left: "50%", transform: "translateX(-50%)", textAlign: "center", width: "100%", maxWidth: 600 }}>
-                <div style={{ color: "rgba(255,255,255,0.9)", fontSize: "1.1rem", fontFamily: "var(--mono)", marginBottom: 8 }}>
-                  {FEATURE_LABELS[uniqueFeatureIds[currentImgIdx]]} ({currentImgIdx + 1} / {uniqueFeatureIds.length})
+              {/* Description Container Below Image */}
+              <div style={{ textAlign: "center", width: "100%", maxWidth: 700 }}>
+                <div style={{ color: "#fff", fontSize: "1.2rem", fontWeight: 800, fontFamily: "var(--display)", marginBottom: 8, letterSpacing: "-0.02em" }}>
+                  {galleryItems[currentImgIdx].title} <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.9rem", fontWeight: 400 }}>({currentImgIdx + 1} / {galleryItems.length})</span>
                 </div>
-                <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.95rem", lineHeight: 1.5 }}>
-                  {FEATURE_DEFINITIONS[normalize(FEATURE_LABELS[uniqueFeatureIds[currentImgIdx]] ?? "")]}
-                </div>
+                {galleryItems[currentImgIdx].description && (
+                  <div style={{ 
+                    color: "rgba(255,255,255,0.9)", 
+                    fontSize: "1.2rem", 
+                    fontWeight: 700,
+                    lineHeight: 1.5, 
+                    maxHeight: "150px", 
+                    overflowY: "auto",
+                    padding: "12px 20px",
+                    background: "rgba(255,255,255,0.08)",
+                    borderRadius: 12,
+                    border: "1px solid rgba(255,255,255,0.1)"
+                  }}>
+                    {galleryItems[currentImgIdx].description}
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>

@@ -52,25 +52,74 @@ function RadialGauge({ value, color }: { value: number; color: string }) {
 }
 
 // ─── Lightbox ─────────────────────────────────────────────────────────────────
-function Lightbox({ src, name, onClose }: { src: string; name: string; onClose: () => void }) {
+function Lightbox({ items, initialIndex, onClose }: { items: {src: string; name: string}[]; initialIndex: number; onClose: () => void }) {
+  const [idx, setIdx] = useState(initialIndex);
+  
+  const nextImg = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIdx((prev) => (prev + 1) % items.length);
+  };
+  const prevImg = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIdx((prev) => (prev - 1 + items.length) % items.length);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
       style={{ position: "fixed", inset: 0, zIndex: 200, display: "flex", alignItems: "center", justifyContent: "center", padding: 24, backdropFilter: "blur(12px)", background: "rgba(0,0,0,0.9)" }}
       onClick={onClose}
     >
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.8, opacity: 0 }}
-        transition={{ type: "spring", damping: 22 }}
-        style={{ maxWidth: 800, width: "100%", borderRadius: 24, overflow: "hidden", position: "relative" }}
+      <button onClick={onClose} style={{ position: "absolute", top: 32, right: 32, background: "rgba(255,255,255,0.1)", border: "none", borderRadius: "50%", padding: 12, cursor: "pointer", color: "#fff", zIndex: 210 }}>
+        <X size={24} />
+      </button>
+      
+      <div 
+        style={{ 
+          display: "flex", 
+          flexDirection: "column", 
+          alignItems: "center", 
+          gap: 24, 
+          maxWidth: "90vw", 
+          maxHeight: "90vh",
+          position: "relative" 
+        }} 
         onClick={e => e.stopPropagation()}
       >
-        <img src={src} alt={name} style={{ width: "100%", maxHeight: "75vh", objectFit: "cover", display: "block" }} />
-        <button onClick={onClose} style={{ position: "absolute", top: 16, right: 16, background: "rgba(0,0,0,0.6)", border: "none", borderRadius: 10, padding: "8px 8px", cursor: "pointer", color: "#fff", display: "flex" }}>
-          <X size={18} />
-        </button>
-      </motion.div>
+        <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          {items.length > 1 && (
+            <button onClick={prevImg} style={{ position: "absolute", left: -60, background: "rgba(255,255,255,0.1)", border: "none", padding: 12, borderRadius: "50%", color: "#fff", cursor: "pointer", zIndex: 10 }}>
+              <ChevronLeft size={24} />
+            </button>
+          )}
+          
+          <motion.img
+            key={idx}
+            initial={{ opacity: 0, scale: 0.95 }} animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", damping: 22 }}
+            src={items[idx].src} alt={items[idx].name} 
+            style={{ 
+              maxWidth: "100%", 
+              maxHeight: "60vh", 
+              objectFit: "contain", 
+              borderRadius: 16,
+              boxShadow: "0 20px 50px rgba(0,0,0,0.5)" 
+            }} 
+          />
+
+          {items.length > 1 && (
+            <button onClick={nextImg} style={{ position: "absolute", right: -60, background: "rgba(255,255,255,0.1)", border: "none", padding: 12, borderRadius: "50%", color: "#fff", cursor: "pointer", zIndex: 10 }}>
+              <ChevronRight size={24} />
+            </button>
+          )}
+        </div>
+        
+        <div style={{ textAlign: "center", width: "100%", maxWidth: 600 }}>
+          <div style={{ color: "#fff", fontSize: "1.2rem", fontWeight: 800, fontFamily: "var(--display)", marginBottom: 8 }}>
+            {items[idx].name} <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.9rem", fontWeight: 400 }}>({idx + 1} / {items.length})</span>
+          </div>
+        </div>
+      </div>
     </motion.div>
   );
 }
@@ -116,7 +165,7 @@ function AllScores({ scores }: { scores: ApiResult["all_scores"] }) {
 export default function ResultPage() {
   const router = useRouter();
   const [result, setResult] = useState<ApiResult | null>(null);
-  const [lightbox, setLightbox] = useState<{ src: string; name: string } | null>(null);
+  const [lightbox, setLightbox] = useState<{ items: {src: string; name: string}[]; initialIndex: number } | null>(null);
 
   useEffect(() => {
     const raw = sessionStorage.getItem("synlearn_result");
@@ -204,10 +253,6 @@ export default function ResultPage() {
                             src={`/features/${f}.jpeg`} 
                             alt={FEATURE_LABELS[f] ?? f} 
                             style={{ width: "100%", height: "100%", objectFit: "cover" }} 
-                            onError={(e) => {
-                              const parent = e.currentTarget.parentElement?.parentElement;
-                              if (parent) parent.style.display = 'none';
-                            }} 
                           />
                         </div>
                         <p style={{ fontSize: "0.65rem", color: "var(--text)", textAlign: "center", lineHeight: 1.2, fontWeight: 500 }}>{FEATURE_LABELS[f] ?? f}</p>
@@ -250,11 +295,17 @@ export default function ResultPage() {
                   initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 0.1 }}
-                  onClick={() => setLightbox({ src: `/features/${result.active_features[0]}.jpeg`, name: FEATURE_LABELS[result.active_features[0]] ?? result.active_features[0] })}
+                  onClick={() => {
+                    const items = [
+                      { src: syn.image.startsWith('http') ? syn.image : syn.image, name: syn.name },
+                      ...result.active_features.map(f => ({ src: `/features/${f}.jpeg`, name: FEATURE_LABELS[f] ?? f }))
+                    ];
+                    setLightbox({ items, initialIndex: 0 });
+                  }}
                   style={{ width: "100%", height: 220, borderRadius: 20, overflow: "hidden", border: "1px solid var(--border)", cursor: "zoom-in", position: "relative", background: "none", padding: 0 }}
                   className="card-hover"
                 >
-                  <img src={`/features/${result.active_features[0]}.jpeg`} alt={FEATURE_LABELS[result.active_features[0]] ?? result.active_features[0]} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s" }}
+                  <img src={syn.image.startsWith('http') ? syn.image : syn.image} alt={syn.name} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s" }}
                     onMouseEnter={e => ((e.target as HTMLImageElement).style.transform = "scale(1.05)")}
                     onMouseLeave={e => ((e.target as HTMLImageElement).style.transform = "scale(1)")}
                     onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
@@ -262,10 +313,10 @@ export default function ResultPage() {
                   <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to top, ${color}88 0%, transparent 60%)` }} />
                   <div style={{ position: "absolute", bottom: 14, left: 14, right: 14, display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
                     <span style={{ color: "#fff", fontWeight: 700, fontSize: "0.95rem", fontFamily: "var(--display)", textAlign: "left" }}>
-                      Matched Feature:<br/>
-                      <span style={{ fontSize: "0.8rem", fontWeight: 500, color: "rgba(255,255,255,0.8)" }}>{FEATURE_LABELS[result.active_features[0]] ?? result.active_features[0]}</span>
+                      Main Syndrome:<br/>
+                      <span style={{ fontSize: "0.8rem", fontWeight: 500, color: "rgba(255,255,255,0.8)" }}>{syn.name}</span>
                     </span>
-                    <span style={{ background: "rgba(0,0,0,0.5)", color: "rgba(255,255,255,0.8)", fontSize: "0.65rem", padding: "4px 9px", borderRadius: 100, backdropFilter: "blur(8px)" }}>Click to expand</span>
+                    <span style={{ background: "rgba(0,0,0,0.5)", color: "rgba(255,255,255,0.8)", fontSize: "0.65rem", padding: "4px 9px", borderRadius: 100, backdropFilter: "blur(8px)" }}>Click for gallery</span>
                   </div>
                 </motion.button>
               )}

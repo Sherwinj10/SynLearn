@@ -1,13 +1,12 @@
 import { AlertCircle } from "lucide-react";
 
 export const MODES = [
-  { id: "", name: "Surprise Me (Random Mode)" },
   { id: "Case-Based Diagnosis", name: "Case-Based Diagnosis" },
   { id: "Feature Identification", name: "Feature Identification" },
-  { id: "Syndrome Builder", name: "Syndrome Builder" },
-  { id: "Differential Diagnosis", name: "Differential Diagnosis" },
-  { id: "Reverse Mapping", name: "Reverse Mapping" },
   { id: "Missing Feature Prediction", name: "Missing Feature Prediction" },
+  { id: "Match the Following", name: "Match the Following" },
+  { id: "The Intruder", name: "The Intruder (Odd One Out)" },
+  { id: "Syndrome Sorting", name: "Syndrome Sorting" },
 ];
 
 interface QuizSetupProps {

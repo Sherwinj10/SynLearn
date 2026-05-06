@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Dna, Search, X, ArrowRight, Zap, ChevronRight } from "lucide-react";
@@ -8,21 +8,79 @@ import featureSynonyms from "@/lib/feature_synonyms.json";
 
 const API = "/api";
 
-// Removed stats for simplicity
+// ─── Interactive Background ──────────────────────────────────────────────────
+function InteractiveBackground() {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMove);
+    return () => window.removeEventListener("mousemove", handleMove);
+  }, []);
+
+  return (
+    <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
+      {/* Mouse Follower Glow */}
+      <motion.div 
+        animate={{ x: mousePos.x - 400, y: mousePos.y - 400 }}
+        transition={{ type: "spring", damping: 40, stiffness: 60, mass: 0.6 }}
+        style={{
+          width: 800, height: 800,
+          background: "radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%)",
+          borderRadius: "50%", position: "absolute", zIndex: 1, pointerEvents: "none"
+        }}
+      />
+
+      {/* Floating Particles */}
+      {[...Array(20)].map((_, i) => (
+        <motion.div
+          key={i}
+          initial={{ 
+            x: Math.random() * 100 + "%", 
+            y: Math.random() * 100 + "%",
+            opacity: Math.random() * 0.4 + 0.1,
+            scale: Math.random() * 0.8 + 0.2
+          }}
+          animate={{ 
+            y: ["0%", "-30%", "0%"],
+            x: ["0%", "8%", "0%"],
+            rotate: [0, 180, 360]
+          }}
+          transition={{ 
+            duration: Math.random() * 25 + 25, 
+            repeat: Infinity, 
+            ease: "linear" 
+          }}
+          style={{
+            position: "absolute",
+            width: Math.random() * 60 + 20,
+            height: Math.random() * 60 + 20,
+            borderRadius: i % 3 === 0 ? "30% 70% 70% 30% / 30% 30% 70% 70%" : "50%",
+            border: "1px solid rgba(255,255,255,0.08)",
+            background: i % 5 === 0 ? "rgba(99,102,241,0.03)" : "none",
+            filter: "blur(2px)",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
 
 // ─── Hero ─────────────────────────────────────────────────────────────────────
 function Hero({ onStart }: { onStart: () => void }) {
   return (
     <section className="section-padding" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "100px 24px 60px", position: "relative", overflow: "hidden" }}>
+      <InteractiveBackground />
+      
       {/* Background orbs & Visual */}
       <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
-
-        <div className="orb" style={{ width: 600, height: 600, top: "10%", left: "50%", transform: "translateX(-50%)", background: "radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%)" }} />
-        <div className="orb" style={{ width: 400, height: 400, bottom: "10%", right: "10%", background: "radial-gradient(circle, rgba(34,211,238,0.1) 0%, transparent 70%)" }} />
-        <div className="orb" style={{ width: 300, height: 300, top: "30%", left: "5%", background: "radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%)" }} />
+        <div className="orb" style={{ width: 800, height: 800, top: "-10%", left: "50%", transform: "translateX(-50%)", background: "radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%)" }} />
+        <div className="orb" style={{ width: 500, height: 500, bottom: "0%", right: "-10%", background: "radial-gradient(circle, rgba(34,211,238,0.08) 0%, transparent 70%)" }} />
       </div>
 
-      <div className="grid-bg" style={{ position: "absolute", inset: 0, opacity: 1, pointerEvents: "none" }} />
+      <div className="grid-bg" style={{ position: "absolute", inset: 0, opacity: 0.6, pointerEvents: "none" }} />
 
 
 

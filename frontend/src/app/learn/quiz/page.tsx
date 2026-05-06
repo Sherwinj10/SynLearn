@@ -3,29 +3,23 @@ import { useState } from "react";
 import { Sparkles, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { AnimatePresence } from "framer-motion";
+import { generateLocalQuestion } from "@/services/QuizEngine";
 import { QuizSetup } from "@/components/quiz/QuizSetup";
 import { QuizCard, QuizData } from "@/components/quiz/QuizCard";
 
 export default function QuizPage() {
-  const [mode, setMode] = useState("");
+  const [mode, setMode] = useState("Case-Based Diagnosis");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [quiz, setQuiz] = useState<QuizData | null>(null);
 
-  async function generateQuestion() {
+  function generateQuestion() {
     setLoading(true);
     setError(null);
     setQuiz(null);
 
     try {
-      const res = await fetch("/api/quiz", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ mode }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to generate");
+      const data = generateLocalQuestion(mode);
       setQuiz(data);
     } catch (err: any) {
       setError(err.message);
@@ -45,7 +39,7 @@ export default function QuizPage() {
           </Link>
           <div style={{ height: 24, width: 1, background: "var(--border)" }} />
           <h1 style={{ fontSize: "1.2rem", fontWeight: 700, margin: 0, fontFamily: "var(--display)", display: "flex", alignItems: "center", gap: 8 }}>
-            <Sparkles size={18} color="var(--cyan)" /> AI Quiz Mode
+            <Sparkles size={18} color="var(--cyan)" /> Quiz Mode
           </h1>
         </div>
 
@@ -60,7 +54,7 @@ export default function QuizPage() {
 
         {/* Quiz Area */}
         <AnimatePresence mode="wait">
-          {quiz && <QuizCard key={quiz.question} quiz={quiz} />}
+          {quiz && <QuizCard key={quiz.question} quiz={quiz} onNext={generateQuestion} />}
         </AnimatePresence>
       </div>
     </div>
